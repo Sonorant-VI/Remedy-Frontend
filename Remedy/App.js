@@ -1,21 +1,31 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { Component } from 'react';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
+ 
+import Dashboard from './components/Dashboard';
+import LogSignIn from './components/LogSignIn';
+import Calendar from './components/Calendar';
+import Accounts from './components/Accounts';
+import Error from './components/Error';
+import Navigation from './components/Navigation';
+ 
+class App extends Component {
+  render() {
+    return (      
+       <BrowserRouter>
+        <div>
+          <Navigation />
+            <Switch>
+             <Route path="/Dashboard" component={Dashboard} exact/>
+             <Route path="/LogSignIn" component={LogSignIn}/>
+             <Route path="/Calendar" component={Calendar}/>
+             <Route path="/Accounts" component={Accounts}/>
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+            <Route component={Error}/>
+           </Switch>
+        </div> 
+      </BrowserRouter>
+    );
+  }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default App;
