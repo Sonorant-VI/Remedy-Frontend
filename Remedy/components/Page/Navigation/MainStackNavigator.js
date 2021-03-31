@@ -2,15 +2,26 @@ import * as React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
+// Pages
 import Home from '../Home/index';
 import Accounts from '../Accounts/index';
 import LogSignIn from '../LogSignIn/index';
 import Calendar from '../Calendar/index';
 
 
+// Icons
+// Use https://icons.expo.fyi/ for icons
+import { Ionicons } from '@expo/vector-icons'; 
+import { Fontisto } from '@expo/vector-icons';
+
+
+
+
 const Stack = createStackNavigator()
 
-function MainStackNavigator() {
+function MainStackNavigator(props) {
+  const { navigation } = props
+
   return (
     <NavigationContainer>
       <Stack.Navigator 
@@ -21,7 +32,7 @@ function MainStackNavigator() {
             backgroundColor: '#AAACAB'
           },
           headerTitleStyle: {
-            fontWeight: 'bold'
+            fontWeight: 'bold'                // Colors are subject to change
           },
           headerTintColor: '#36D5F3',
           headerBackTitleVisible: false // doesn't page which back button will lead too
@@ -29,11 +40,52 @@ function MainStackNavigator() {
         headerMode='float' //keeps header in place on androids
         >
           
-        <Stack.Screen name='Home' component={Home} options={{title: 'Dashboard' }}/>
-        <Stack.Screen name='Accounts' component={Accounts} options={{title: 'Linked Accounts' }} />
-        <Stack.Screen name='LogSignIn' component={LogSignIn} options={{title: 'Remedy'}} />
-        <Stack.Screen name='Calendar' component={Calendar} options={{title: 'Calendar' }} />
+        <Stack.Screen
+          name='Home' 
+          component={Home} 
+          options={{
+            title: 'Dashboard',
+            headerRight: () => (
+              <Ionicons 
+                name="settings" 
+                size={32} 
+                color="#36D5F3" 
+                onPress={ () => 
+                  alert('Settings button pressed')
+                } 
+                style={{ paddingRight: 10 }}/>
+            ), 
+            }}/>
+
+        <Stack.Screen 
+          name='Accounts' 
+          component={Accounts} 
+          options={{title: 'Linked Accounts'     
+          }} />
+
+        <Stack.Screen
+         name='LogSignIn' 
+         component={LogSignIn} 
+         options={{title: 'Remedy'}} />
+
+        <Stack.Screen
+         name='Calendar' 
+         component={Calendar} 
+         options={{
+           title: 'Calendar',
+           headerRight: () => (
+             <Fontisto 
+               name="persons" 
+               size={32} 
+               color="#36D5F3" 
+               onPress={ () => 
+                 alert('Accounts button pressed')
+               } 
+               style={{ paddingRight: 10 }}/>
+           ), 
+           }} />
       </Stack.Navigator>
+
     </NavigationContainer>
   )
 }
