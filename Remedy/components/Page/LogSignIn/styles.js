@@ -1,3 +1,4 @@
+import { Row } from 'native-base';
 import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
@@ -10,7 +11,8 @@ const styles = StyleSheet.create({
     text: {
       color: '#101010',
       fontSize: 24,
-      fontWeight: 'bold'
+      fontWeight: 'bold',
+      margin: 20
     },
     buttonContainer: {
       backgroundColor: '#222',
@@ -19,8 +21,23 @@ const styles = StyleSheet.create({
       margin: 20
     },
     buttonText: {
+      textAlign: "center",
       fontSize: 20,
       color: '#fff'
+    },
+    signUpBox: {
+      width: 300
+    },
+    radioButtonContainer: {
+      flexDirection: "row"
+    },
+    label: {
+      margin: 8,
+      color: '#2c2c2c',
+    },
+    desc: {
+      marginBottom: 8,
+      color: "#808080"
     },
   });
 
