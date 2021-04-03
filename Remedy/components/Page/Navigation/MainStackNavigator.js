@@ -78,11 +78,10 @@ function MainStackNavigator(props) {
                name="persons" 
                size={32} 
                color="#36D5F3" 
-               onPress={ () => 
-                 alert('Accounts button pressed')
+               onPress={ () => alert('Settings button pressed') // subject to change
                } 
                style={{ paddingRight: 10 }}/>
-           ), 
+           ),
            }} />
       </Stack.Navigator>
 
