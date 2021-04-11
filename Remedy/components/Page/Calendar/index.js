@@ -10,11 +10,13 @@ import FloatingButton from "../../FloatingButton/FloatingButton";
 import { Ionicons } from '@expo/vector-icons'; 
 import { Fontisto } from '@expo/vector-icons';
 
+
 function Calendar(props) {
   const { navigation } = props
   return (
       <View style={styles.container}>
         <Text style={styles.text}>Calendar</Text>
+        <TodoForm />
        <TouchableOpacity
          style={styles.buttonContainer}
          onPress={() => navigation.navigate('Accounts')}>

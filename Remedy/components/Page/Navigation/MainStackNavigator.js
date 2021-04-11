@@ -7,6 +7,8 @@ import Home from '../Home/index';
 import Accounts from '../Accounts/index';
 import LogSignIn from '../LogSignIn/index';
 import Calendar from '../Calendar/index';
+import SettingsP from '../SettingsP/index';
+import FAQ from '../FAQ/index';
 
 
 // Icons
@@ -83,6 +85,16 @@ function MainStackNavigator(props) {
                style={{ paddingRight: 10 }}/>
            ),
            }} />
+
+        <Stack.Screen
+         name='SettingsP' 
+         component={SettingsP} 
+         options={{title: 'Settings'}} />
+
+        <Stack.Screen
+         name='FAQ' 
+         component={FAQ} 
+         options={{title: 'FAQ'}} />
       </Stack.Navigator>
 
     </NavigationContainer>
