@@ -86,7 +86,7 @@ function Home(props) {
       <View style={{flex: 1}}>
         <TouchableOpacity
           style={styles.buttonContainer}
-          onPress={() => navigation.navigate('Calendar')}>
+          onPress={() => navigation.navigate('CalendarPage')}>
           <Text style={styles.buttonText}>Go to Calendar Screen</Text>
         </TouchableOpacity>
      </View>

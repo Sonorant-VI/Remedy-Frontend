@@ -5,7 +5,13 @@ const styles = StyleSheet.create({
       flex: 1,
       justifyContent: 'center',
       alignItems: 'center',
-      backgroundColor: 'white'
+      backgroundColor: 'white',
+    },
+    elementsContainer: {
+      marginBottom: 24,
+      marginRight: 15,
+      marginLeft: 15,
+      width: '95%',
     },
     text: {
       color: '#101010',
@@ -16,11 +22,15 @@ const styles = StyleSheet.create({
       backgroundColor: '#222',
       borderRadius: 5,
       padding: 10,
-      margin: 20
+    },
+    buttonRow: {
+      flexDirection: "row",
+      alignSelf: 'center',
     },
     buttonText: {
       fontSize: 20,
-      color: '#fff'
+      color: '#fff',
+      textAlign: 'center',
     },
   });
 

@@ -6,7 +6,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import Home from '../Home/index';
 import Accounts from '../Accounts/index';
 import LogSignIn from '../LogSignIn/index';
-import Calendar from '../Calendar/index';
+import CalendarPage from '../Calendar/index';
 import SettingsP from '../SettingsP/index';
 import FAQ from '../FAQ/index';
 
@@ -71,10 +71,10 @@ function MainStackNavigator(props) {
          options={{title: 'Remedy'}} />
 
         <Stack.Screen
-         name='Calendar' 
-         component={Calendar} 
+         name='CalendarPage' 
+         component={CalendarPage} 
          options={{
-           title: 'Calendar',
+           title: 'CalendarPage',
            headerRight: () => (
              <Fontisto 
                name="persons" 
