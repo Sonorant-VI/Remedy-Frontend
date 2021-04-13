@@ -28,6 +28,9 @@ const styles = StyleSheet.create({
     signUpBox: {
       width: 300
     },
+    logInBox: {
+      width: 300
+    },
     radioButtonContainer: {
       flexDirection: "row"
     },
