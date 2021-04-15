@@ -28,7 +28,7 @@ function CalendarPage(props) {
   
 
   const [medModalVisible, setMedModalVisible] = useState(false)
-
+ 
   const [appModalVisible, setAppModalVisible] = useState(false)
 
   // function add
@@ -54,12 +54,6 @@ function CalendarPage(props) {
 
             />
           </View>
-
-          <TouchableOpacity
-            style={styles.buttonContainer}
-            onPress={() => navigation.navigate('Accounts')}>
-            <Text style={styles.buttonText}>Go to Accounts Screen</Text>
-          </TouchableOpacity>
 
           {/* <FloatingButton style={{ bottom: 80 }} /> */}
         </View>

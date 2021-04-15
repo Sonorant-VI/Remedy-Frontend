@@ -18,7 +18,9 @@ function LogIn() {
         <Text>password</Text>
         <TextInput placeholder="input password"/>
         <TouchableOpacity
-          style={styles.buttonContainer}>
+          style={styles.buttonContainer}
+          onPress={() => console.log("Log In Button Pressed ")} 
+          >
           <Text style={styles.buttonText}>LogIn</Text>
         </TouchableOpacity>
       </View>
@@ -78,15 +80,14 @@ function SignUp(props) {
         </View>
         {/* <Text style={styles.desc}>add descriptions..</Text> */}
         <TouchableOpacity
-          style={styles.buttonContainer}>
+          style={styles.buttonContainer}
+          onPress={() => console.log("Sign Up Button Pressed ")} 
+          >
+            
           <Text style={styles.buttonText}>SignUp</Text>
+           
         </TouchableOpacity>
       </View>
-      <TouchableOpacity
-        style={styles.buttonContainer}
-        onPress={() => navigation.navigate('Home')}>
-        <Text style={styles.buttonText}>Home</Text>
-      </TouchableOpacity>
     </View>
   );
 }

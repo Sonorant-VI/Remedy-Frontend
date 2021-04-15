@@ -11,11 +11,10 @@ function Accounts(props) {
       <Text style={styles.text}>Accounts</Text>
       <TouchableOpacity
         style={styles.buttonContainer}
-        onPress={() => navigation.navigate('Home')}>
-        <Text style={styles.buttonText}>Go to Home Screen</Text>
+        onPress={() => navigation.navigate('LogSignIn')}>
+        <Text style={styles.buttonText}>Open Log in page</Text>
       </TouchableOpacity>
 
-      <FloatingButton style={{ bottom: 80}} />
     </View>
   )
 }

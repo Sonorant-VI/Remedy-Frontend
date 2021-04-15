@@ -91,7 +91,6 @@ function Home(props) {
         </TouchableOpacity>
      </View>
     </View>
-    <FloatingButton style={{ bottom: 80}} />
   </View>
 
   <InputModal
