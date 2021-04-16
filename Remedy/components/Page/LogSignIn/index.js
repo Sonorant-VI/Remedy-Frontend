@@ -1,5 +1,5 @@
 import  * as React from 'react';
-import { StyleSheet, View, Text, TouchableOpacity, CheckBox, Touchable } from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import { RadioButton } from 'react-native-paper';
 import { TextInput } from 'react-native-gesture-handler';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';

@@ -4,10 +4,30 @@ import {Modal, Text} from 'react-native';
 import {ModalButton, ModalContainer, ModalView, StyledInput, ModalAction, ModalActionGroup, ModalIcon, HeaderTitle, colors, styles} from "../Popups/styles";
 import {AntDesign} from '@expo/vector-icons'
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import DatePicker from 'react-native-date-picker';
+import DateTimePicker from '@react-native-community/datetimepicker';
 
 const AddMed = ({modalVisible, setModalVisible}) => {
-    const [date, setDate] = React.useState(new Date())
+    const [date, setDate] = useState(new Date())
+    // const [date, setDate] = useState(new Date(1598051730000));
+    const [mode, setMode] = useState('dateTime')
+    const [show, setShow] = useState(false)
+    const onChange = (event, selectedDate) => {
+        const currentDate = selectedDate || date;
+        setShow(Platform.OS === 'android');
+        setDate(currentDate);
+      };
+    const showMode = (currentMode) => {
+        setShow(true);
+        setMode(currentMode);
+      };
+    
+      const showDatepicker = () => {
+        showMode('date');
+      };
+    
+      const showTimepicker = () => {
+        showMode('time');
+      };
 
     const handleCloseModal = () => {
         setModalVisible(false); }
@@ -55,11 +75,21 @@ const AddMed = ({modalVisible, setModalVisible}) => {
                         <ModalIcon>
                             <HeaderTitle>Add Medications!</HeaderTitle>
                         </ModalIcon>
-                        <DatePicker
+                        {/* <DatePicker
                             mode="time"
                             date={date}
                             onDateChange={setDate}
-                        />
+                        /> */}
+                        {modalVisible && (
+                            <DateTimePicker
+                            testID="dateTimePicker"
+                            value={date}
+                            mode="datetime"
+                            is24Hour={true}
+                            display="spinner"
+                            onChange={onChange}
+                            />
+                        )}
                         {/* <StyledInput
                             placeholder="Add a todo"
                             placeholderTextColor={colors.alternative}
