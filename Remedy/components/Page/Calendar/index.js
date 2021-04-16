@@ -5,7 +5,6 @@ import { Calendar } from 'react-native-calendars';
 import styles from './styles';
 import FloatingButton from "../../FloatingButton/FloatingButton";
 
-
 // Icons
 // Use https://icons.expo.fyi/ for icons
 import { Ionicons } from '@expo/vector-icons'; 
@@ -28,7 +27,7 @@ function CalendarPage(props) {
   
 
   const [medModalVisible, setMedModalVisible] = useState(false)
-
+ 
   const [appModalVisible, setAppModalVisible] = useState(false)
 
   // function add
@@ -59,8 +58,8 @@ function CalendarPage(props) {
             onPress={() => navigation.navigate('Accounts')}>
             <Text style={styles.buttonText}>Go to Accounts Screen</Text>
           </TouchableOpacity>
+          {/* <FloatingButton style={{ bottom: 80 }} /> */}
         </View>
-          <FloatingButton style={{ bottom: 80 }} />
       </View>
   )
 }
