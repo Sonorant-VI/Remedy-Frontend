@@ -48,14 +48,11 @@ function SignUp(props) {
             password: userPassword,
             role: userRole
         }).then((res) => {
-            /*
           AsyncStorage.setItem('jwt',res.body.jwt);
           AsyncStorage.setItem('user',res.body.email);
-             */
         }).catch(function (error) {
             console.log(error.response.request._response);
         });
-        console.log(AsyncStorage.getItem('jwt'));
     }
 
     return (
