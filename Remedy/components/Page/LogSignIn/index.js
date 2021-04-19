@@ -5,24 +5,45 @@ import {TextInput} from 'react-native-gesture-handler';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 // import Icon from 'react-native-vector-icons/Ionicons';
 import {Ionicons} from '@expo/vector-icons';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import styles from './styles';
 
 import axios from "axios";
-import AsyncStorage from "@react-native-community/async-storage";
+
 
 function LogIn() {
+    const [userEmail, setUserEmail] = React.useState()
+    const [userPassword, setUserPassword] = React.useState()
+
+    function sendLogin() {
+        axios.post('http://localhost:3000/api/auth/login',{
+            email:userEmail,
+            password:userPassword
+        }).then((res)=>{
+            AsyncStorage.setItem('jwt',res.data.jwt);
+            AsyncStorage.setItem('user',res.data.email);
+        }).catch(function (error) {
+            console.log(error.response.request._response);
+        });
+    }
+
+
+
     return (
         <View style={styles.container}>
             <Text style={styles.text}>Log In</Text>
             <View style={styles.logInBox}>
                 <Text>email</Text>
-                <TextInput placeholder="input email"/>
+                <TextInput placeholder="input email"  onChangeText={(email) => {
+                    setUserEmail(email);
+                }}/>
                 <Text>password</Text>
-                <TextInput placeholder="input password"/>
+                <TextInput placeholder="input password" onChangeText={(password) => {
+                    setUserPassword(password);
+                }}/>
                 <TouchableOpacity
                     style={styles.buttonContainer}
-                    onPress={() => console.log("Log In Button Pressed ")}
+                    onPress={() => sendLogin()}
                 >
                     <Text style={styles.buttonText}>LogIn</Text>
                 </TouchableOpacity>
@@ -40,16 +61,19 @@ function SignUp(props) {
 
 
     function sendRegister() {
-        if (userRole === "user") {
-            setUserRole("passive");
+        switch (userRole){
+            case "user": setUserRole("passive");
+            case "authUser": setUserRole("active");
+            case "doctor": setUserRole("passive");
+            default:setUserRole("passive");
         }
         axios.post('http://localhost:3000/api/auth/register', {
             email: userEmail,
             password: userPassword,
             role: userRole
         }).then((res) => {
-          AsyncStorage.setItem('jwt',res.body.jwt);
-          AsyncStorage.setItem('user',res.body.email);
+          AsyncStorage.setItem('jwt',res.data.jwt);
+          AsyncStorage.setItem('user',res.data.email);
         }).catch(function (error) {
             console.log(error.response.request._response);
         });
@@ -117,6 +141,7 @@ function SignUp(props) {
 
 function LogSignIn() {
     const Tab = createBottomTabNavigator();
+
 
     return (
         <Tab.Navigator
