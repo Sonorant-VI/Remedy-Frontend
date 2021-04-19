@@ -11,9 +11,23 @@ import styles from './styles';
 import axios from "axios";
 
 
+
+
+
 function LogIn() {
     const [userEmail, setUserEmail] = React.useState()
     const [userPassword, setUserPassword] = React.useState()
+
+    const getJwt = async () => {
+        try {
+            const value = await AsyncStorage.getItem('jwt');
+            if(value !== null) {
+                return value;
+            }
+        } catch(e) {
+            console.log("couldn't acces to jwt in local storage");
+        }
+    }
 
     function sendLogin() {
         axios.post('http://localhost:3000/api/auth/login',{
