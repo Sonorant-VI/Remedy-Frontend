@@ -11,9 +11,6 @@ import styles from './styles';
 import axios from "axios";
 
 
-
-
-
 function LogIn() {
     const [userEmail, setUserEmail] = React.useState()
     const [userPassword, setUserPassword] = React.useState()
@@ -72,7 +69,6 @@ function SignUp(props) {
     const [userPassword, setUserPassword] = React.useState()
     const [userRole, setUserRole] = React.useState('user')
     const toggleSwitch = () => (previousState => !previousState)
-
 
     function sendRegister() {
         switch (userRole){
