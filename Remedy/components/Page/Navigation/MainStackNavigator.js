@@ -3,7 +3,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 // Pages
  import Home from '../Home/index';
@@ -47,7 +47,7 @@ function CalendarStack() {
   return (
     <>
       <Stack.Navigator
-        initialRouteName="CalendarPage"
+        initialRouteName="Calendar"
         screenOptions={{
           headerStyle: { backgroundColor: '#09B0DD' },
           headerTintColor: '#fff',
@@ -145,8 +145,6 @@ function MainStackNavigator() {
           ),
         }}  
         />
-
-      
       </Tab.Navigator>
     </NavigationContainer>
   )

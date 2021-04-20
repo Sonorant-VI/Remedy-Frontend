@@ -38,7 +38,7 @@ const AddApp = ({modalVisible, setModalVisible}) => {
             <TouchableOpacity 
               style={styles.whiteButton}
               onPress={() => {setModalVisible(true)}}>
-                <AntDesign name="plus" size={30} color={colors.secondary}/>
+                <AntDesign name="plus" size={30} color={colors.primary}/>
             <Text style={styles.whiteBtnText}>Appointment</Text>
             </TouchableOpacity>
 
