@@ -24,8 +24,9 @@ const styles = StyleSheet.create({
       padding: 10,
     },
     buttonRow: {
-      flexDirection: "row",
-      alignSelf: 'center',
+      flexDirection: "column",
+      justifyContent: "center",
+      alignItems: "center",
     },
     buttonText: {
       fontSize: 20,

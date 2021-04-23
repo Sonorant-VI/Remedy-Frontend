@@ -47,18 +47,11 @@ function CalendarPage(props) {
               modalVisible={medModalVisible}
               setModalVisible={setMedModalVisible}
             />
-            <AddApp
+            <AddApp 
               modalVisible={appModalVisible}
               setModalVisible={setAppModalVisible}
             />
           </View>
-
-          <TouchableOpacity
-            style={styles.buttonContainer}
-            onPress={() => navigation.navigate('Accounts')}>
-            <Text style={styles.buttonText}>Go to Accounts Screen</Text>
-          </TouchableOpacity>
-          {/* <FloatingButton style={{ bottom: 80 }} /> */}
         </View>
       </View>
   )
