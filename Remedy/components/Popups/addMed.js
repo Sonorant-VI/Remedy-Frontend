@@ -5,6 +5,7 @@ import {ModalButton, ModalContainer, ModalView, StyledInput, ModalAction, ModalA
 import {AntDesign} from '@expo/vector-icons'
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import {TextInput} from 'react-native-gesture-handler';
 
 const AddMed = ({modalVisible, setModalVisible}) => {
     const [date, setDate] = useState(new Date())
@@ -73,7 +74,7 @@ const AddMed = ({modalVisible, setModalVisible}) => {
                 <ModalContainer>
                     <ModalView>
                         <ModalIcon>
-                            <HeaderTitle>Add Medications!</HeaderTitle>
+                            <HeaderTitle>Add Medicationsss!</HeaderTitle>
                         </ModalIcon>
                         {/* <DatePicker
                             mode="time"
@@ -90,6 +91,15 @@ const AddMed = ({modalVisible, setModalVisible}) => {
                             onChange={onChange}
                             />
                         )}
+                        <Text>Brand Name : </Text>
+                        <TextInput placeholder="Enter brand name..." onChangeText={(brandName) => {
+                            setBrandName(brandName);
+                         }}/>
+                        <Text>Generic Name : </Text>
+                        <TextInput placeholder="Enter generic name..." onChangeText={(genericName) => {
+                            setBrandName(genericName);
+                         }}/>
+                    
                         {/* <StyledInput
                             placeholder="Add a todo"
                             placeholderTextColor={colors.alternative}
