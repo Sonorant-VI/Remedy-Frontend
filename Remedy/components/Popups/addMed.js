@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import {Modal, Text} from 'react-native';
+import {Modal, Text, Button, Alert} from 'react-native';
 
 import {ModalButton, ModalContainer, ModalView, StyledInput, ModalAction, ModalActionGroup, ModalIcon, HeaderTitle, colors, styles} from "../Popups/styles";
 import {AntDesign} from '@expo/vector-icons'
@@ -55,6 +55,13 @@ const AddMed = ({modalVisible, setModalVisible}) => {
         
     //     settodoInputValue("");
     // }
+function CreateRem() {
+    
+    Alert.alert('Reminder added!')
+
+    // TODO: API call to create med reminder
+}
+
 
     return (
         <> 
@@ -74,7 +81,7 @@ const AddMed = ({modalVisible, setModalVisible}) => {
                 <ModalContainer>
                     <ModalView>
                         <ModalIcon>
-                            <HeaderTitle>Add Medicationsss!</HeaderTitle>
+                            <HeaderTitle>Add Medications</HeaderTitle>
                         </ModalIcon>
                         {/* <DatePicker
                             mode="time"
@@ -88,7 +95,9 @@ const AddMed = ({modalVisible, setModalVisible}) => {
                             mode="datetime"
                             is24Hour={true}
                             display="spinner"
-                            onChange={onChange}
+                            onChange={(datetime) => {
+                                setDateTime(datetime)
+                            }}
                             />
                         )}
                         <Text>Brand Name : </Text>
@@ -99,6 +108,15 @@ const AddMed = ({modalVisible, setModalVisible}) => {
                         <TextInput placeholder="Enter generic name..." onChangeText={(genericName) => {
                             setBrandName(genericName);
                          }}/>
+
+                        <Button 
+                        onPress={CreateRem}
+                        title="Create Reminder"
+                        color="#841584"
+                        accessibilityLabel="Learn more about this purple button"
+                        //onPress={() => Alert.alert('Reminder added!')}
+                        />
+
                     
                         {/* <StyledInput
                             placeholder="Add a todo"
