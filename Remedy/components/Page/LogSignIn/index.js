@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {StyleSheet, View, Text, TouchableOpacity} from 'react-native';
+import {StyleSheet, View, Text, TouchableOpacity, Image} from 'react-native';
 import {RadioButton} from 'react-native-paper';
 import {TextInput} from 'react-native-gesture-handler';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
@@ -14,6 +14,8 @@ import {useEffect} from "react";
 function LogIn() {
     const [userEmail, setUserEmail] = React.useState()
     const [userPassword, setUserPassword] = React.useState()
+
+    let logoPath = require('../../../assets/logo-circle.png');
 
     function sendLogin() {
         axios.post('http://sonorant-vi.herokuapp.com/api/auth/login', {
@@ -36,16 +38,18 @@ function LogIn() {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.text}>Log In</Text>
             <View style={styles.logInBox}>
-                <Text>email</Text>
-                <TextInput placeholder="input email" onChangeText={(email) => {
-                    setUserEmail(email);
-                }}/>
-                <Text>password</Text>
-                <TextInput placeholder="input password" onChangeText={(password) => {
-                    setUserPassword(password);
-                }}/>
+                <Image style={styles.logo} source={logoPath} />
+                <View style={styles.accountInfoBox}>
+                    <TextInput style={styles.accountInfo} placeholder="email" onChangeText={(email) => {
+                        setUserEmail(email);
+                    }}/>
+                </View>
+                <View style={styles.accountInfoBox}>
+                    <TextInput style={styles.accountInfo} placeholder="password" onChangeText={(password) => {
+                        setUserPassword(password);
+                    }}/>
+                </View>
                 <TouchableOpacity
                     style={styles.buttonContainer}
                     onPress={() => sendLogin()}
@@ -96,17 +100,20 @@ function SignUp(props) {
         <View style={styles.container}>
             <Text style={styles.text}>Sign Up</Text>
             <View style={styles.signUpBox}>
-                <Text>email</Text>
-                <TextInput placeholder="input email" onChangeText={(email) => {
-                    setUserEmail(email);
-                }}/>
-                <Text>password</Text>
-                <TextInput placeholder="input password" onChangeText={(password) => {
-                    setUserPassword(password);
-                }}/>
-                <Text>check password</Text>
-                <TextInput placeholder="check password"/>
-                <Text>role</Text>
+                <View style={styles.accountInfoBox}>
+                    <TextInput style={styles.accountInfo} placeholder="email" onChangeText={(email) => {
+                        setUserEmail(email);
+                    }}/>
+                </View>
+                <View style={styles.accountInfoBox}>
+                    <TextInput style={styles.accountInfo} placeholder="password" onChangeText={(password) => {
+                        setUserPassword(password);
+                    }}/>
+                </View>
+                <View style={styles.accountInfoBox}>
+                    <TextInput style={styles.accountInfo} placeholder="check password"/>
+                </View>
+                <Text style={styles.role}>role</Text>
                 <View style={styles.radioButtonContainer}>
                     <RadioButton
                         value="user"
