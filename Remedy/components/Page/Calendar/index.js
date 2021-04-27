@@ -11,73 +11,28 @@ import {Ionicons} from '@expo/vector-icons';
 import {Fontisto} from '@expo/vector-icons';
 import AddMed from '../../Popups/addMed';
 import AddApp from '../../Popups/addApp';
-import axios from "axios";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 
 // import { DatePicker } from 'antd';
 
-async function CalendarPage(props) {
+function CalendarPage(props) {
     const {navigation} = props
+
     const [markedDates, setMarkedDates] = React.useState(null);
-    const [medModalVisible, setMedModalVisible] = useState(false);
-    const [appModalVisible, setAppModalVisible] = useState(false);
     const [dates, setDates] = React.useState(['2021-04-12', '2021-04-30']);
-    const appointment = {key: 'Appointment', color: 'red', selectedDotColor: 'red'};
-    let memory = await getMultiple();
-    let jwt = await memory.get('jwt');
-    let uid = parseFloat(await memory.get('uid'));
 
-    async function getMultiple() {
-        let values
-        let map=new Map();
-        try {
-            values = await AsyncStorage.multiGet(['jwt', 'uid'])
-        } catch (e) {
-            // read error
-        }
-        values.forEach(array=>{
-            map.set(array[0],array[1]);
-        })
-        return map;
+    function addDates() {
+        let obj = dates.reduce((c, v) => Object.assign(c, {[v]: {marked: true, dotColor: 'red'},}), {},);
+        console.log(obj);
+        setMarkedDates(obj);
     }
 
 
-    let medReminderList;
-    let appReminderList;
-    getAppReminderList();
-    getMedReminderList();
+    const [medModalVisible, setMedModalVisible] = useState(false)
 
-
-    // get all the med reminders
-    function getMedReminderList() {
-        axios.get('http://sonorant-vi.herokuapp.com/api/medReminder/' + uid, {
-            headers: {
-                'x-access-token': jwt
-            }
-        }).then((res) => {
-
-        }).catch(function (error) {
-            console.log(error);
-        });
-    }
-
-    //get all the appreminder
-    function getAppReminderList() {
-        axios.get('http://sonorant-vi.herokuapp.com/api/appReminder/' + uid, {
-            headers: {
-                'x-access-token': jwt
-            }
-        }).then((res) => {
-
-        }).catch(function (error) {
-            console.log(error);
-        });
-    }
-
-    //-------------Initialisation----------------------------
-
+    const [appModalVisible, setAppModalVisible] = useState(false)
 
     // function add
+
     return (
         <ScrollView style={styles.scrollView}>
             <View style={styles.container}>
