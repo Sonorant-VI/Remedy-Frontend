@@ -121,7 +121,7 @@ function SignUp(props) {
                         onPress={() => setUserRole('user')}
                     />
                     <TouchableOpacity onPress={() => setUserRole('user')}>
-                        <Text style={styles.label}>user</Text>
+                        <Text style={styles.label}>Active User</Text>
                     </TouchableOpacity>
                 </View>
                 {/* <Text style={styles.desc}>add descriptions..</Text> */}
@@ -132,20 +132,10 @@ function SignUp(props) {
                         onPress={() => setUserRole('authUser')}
                     />
                     <TouchableOpacity onPress={() => setUserRole('authUser')}>
-                        <Text style={styles.label}>authenticated user</Text>
+                        <Text style={styles.label}>Passive User</Text>
                     </TouchableOpacity>
                 </View>
                 {/* <Text style={styles.desc}>add descriptions..</Text> */}
-                <View style={styles.radioButtonContainer}>
-                    <RadioButton
-                        value="doctor"
-                        status={userRole === 'doctor' ? 'checked' : 'unchecked'}
-                        onPress={() => setUserRole('doctor')}
-                    />
-                    <TouchableOpacity onPress={() => setUserRole('doctor')}>
-                        <Text style={styles.label}>doctor</Text>
-                    </TouchableOpacity>
-                </View>
                 {/* <Text style={styles.desc}>add descriptions..</Text> */}
                 <TouchableOpacity
                     style={styles.buttonContainer}
