@@ -11,59 +11,103 @@ import {Ionicons} from '@expo/vector-icons';
 import {Fontisto} from '@expo/vector-icons';
 import AddMed from '../../Popups/addMed';
 import AddApp from '../../Popups/addApp';
+import axios from "axios";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 // import { DatePicker } from 'antd';
 
-function CalendarPage(props) {
+ function CalendarPage(props) {
     const {navigation} = props
-
     const [markedDates, setMarkedDates] = React.useState(null);
     const [dates, setDates] = React.useState(['2021-04-12', '2021-04-30']);
+    const appointment = {key: 'Appointment', color: 'red', selectedDotColor: 'red'};
+    let jwt = getJwt();
+    let uid = console.log(getUid());
 
-    function addDates() {
-        let obj = dates.reduce((c, v) => Object.assign(c, {[v]: {marked: true, dotColor: 'red'},}), {},);
-        console.log(obj);
-        setMarkedDates(obj);
+    async function getJwt() {
+        try {
+            return await AsyncStorage.getItem('jwt')
+        } catch (e) {
+            e.getMessage();
+        }
+    }
+    async function getUid() {
+        try {
+            return parseInt(await AsyncStorage.getItem('uid'))
+        } catch (e) {
+            e.getMessage();
+        }
     }
 
+    let medReminderList;
+    let appReminderList;
+    getAppReminderList();
+    getMedReminderList();
 
-    const [medModalVisible, setMedModalVisible] = useState(false)
 
-    const [appModalVisible, setAppModalVisible] = useState(false)
+    // get all the med reminders
+    function getMedReminderList() {
+        axios.get('http://sonorant-vi.herokuapp.com/api/medReminder/' + uid, {
+            headers: {
+                'x-access-token': jwt
+            }
+        }).then((res) => {
+            medReminderList = JSON.parse(res.data);
+        }).catch(function (error) {
+            console.log(error.response.request._response);
+        });
+    }
+
+    //get all the appreminder
+    function getAppReminderList() {
+        axios.get('http://sonorant-vi.herokuapp.com/api/appReminder/' + uid, {
+            headers: {
+                'x-access-token': jwt
+            }
+        }).then((res) => {
+            appReminderList = JSON.parse(res.data);
+        }).catch(function (error) {
+            console.log(error.response.request._response);
+        });
+    }
+
+    //-------------Initialisation----------------------------
+
+    const [medModalVisible, setMedModalVisible] = useState(false);
+    const [appModalVisible, setAppModalVisible] = useState(false);
 
     // function add
-
     return (
-            <ScrollView style={styles.scrollView}>
-                <View style={styles.container}>
-                    <View style={styles.elementsContainer}>
-                        <Text style={styles.text}>Calendar</Text>
-                        <Calendar
-                            onDayPress={(day) => {
-                                console.log(day);
-                            }}
-                            markedDates={markedDates}/>
+        <ScrollView style={styles.scrollView}>
+            <View style={styles.container}>
+                <View style={styles.elementsContainer}>
+                    <Text style={styles.text}>Calendar</Text>
+                    <Calendar
+                        onDayPress={(day) => {
+                            console.log(day);
+                        }}
+                        markedDates={markedDates}/>
 
-                        <View style={{
-                            borderBottomColor: 'black',
-                            borderBottomWidth: 1,
-                            borderWidth: 1,
-                            marginVertical: 50
-                        }}/>
+                    <View style={{
+                        borderBottomColor: 'black',
+                        borderBottomWidth: 1,
+                        borderWidth: 1,
+                        marginVertical: 50
+                    }}/>
 
-                        <View style={styles.buttonRow}>
-                            <AddMed
-                                modalVisible={medModalVisible}
-                                setModalVisible={setMedModalVisible}
-                            />
-                            <AddApp
-                                modalVisible={appModalVisible}
-                                setModalVisible={setAppModalVisible}
-                            />
-                        </View>
+                    <View style={styles.buttonRow}>
+                        <AddMed
+                            modalVisible={medModalVisible}
+                            setModalVisible={setMedModalVisible}
+                        />
+                        <AddApp
+                            modalVisible={appModalVisible}
+                            setModalVisible={setAppModalVisible}
+                        />
                     </View>
                 </View>
-            </ScrollView>
+            </View>
+        </ScrollView>
 
     )
 }

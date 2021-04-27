@@ -15,27 +15,22 @@ function LogIn() {
     const [userEmail, setUserEmail] = React.useState()
     const [userPassword, setUserPassword] = React.useState()
 
-    const getJwt = async () => {
-        try {
-            const value = await AsyncStorage.getItem('jwt');
-            if(value !== null) {
-                return value;
-            }
-        } catch(e) {
-            console.log("couldn't acces to jwt in local storage");
-        }
-    }
-
     function sendLogin() {
-        axios.post('http://localhost:3000/api/auth/login',{
+        axios.post('http://sonorant-vi.herokuapp.com/api/auth/login',{
             email:userEmail,
             password:userPassword
-        }).then((res)=>{
-            AsyncStorage.setItem('jwt',res.data.jwt);
-            AsyncStorage.setItem('user',res.data.email);
+        }).then( async (res)=>{
+            const token=["jwt",res.data.jwt]
+            const uid=["uid",JSON.stringify(res.data.id)]
+            try{
+                await AsyncStorage.multiSet([token,uid])
+            }catch (e){
+                console.log(e);
+            }
         }).catch(function (error) {
-            console.log(error.response.request._response);
+            console.log(error);
         });
+
     }
 
 
@@ -77,15 +72,20 @@ function SignUp(props) {
             case "doctor": setUserRole("passive");
             default:setUserRole("passive");
         }
-        axios.post('http://localhost:3000/api/auth/register', {
+        axios.post('http://sonorant-vi.herokuapp.com/api/auth/register', {
             email: userEmail,
             password: userPassword,
             role: userRole
-        }).then((res) => {
-          AsyncStorage.setItem('jwt',res.data.jwt);
-          AsyncStorage.setItem('user',res.data.email);
+        }).then( async (res) => {
+            const token=["jwt",res.data.jwt]
+            const uid=["uid",JSON.stringify(res.data.id)]
+            try{
+                await AsyncStorage.multiSet([token,uid])
+            }catch (e){
+                console.log(e);
+            }
         }).catch(function (error) {
-            console.log(error.response.request._response);
+            console.log(error);
         });
     }
 

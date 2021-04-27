@@ -12,11 +12,13 @@ const AddMed = ({modalVisible, setModalVisible}) => {
     // const [date, setDate] = useState(new Date(1598051730000));
     const [mode, setMode] = useState('dateTime')
     const [show, setShow] = useState(false)
+
     const onChange = (event, selectedDate) => {
         const currentDate = selectedDate || date;
         setShow(Platform.OS === 'android');
         setDate(currentDate);
       };
+
     const showMode = (currentMode) => {
         setShow(true);
         setMode(currentMode);
