@@ -155,8 +155,6 @@ function SignUp(props) {
 
 function LogSignIn() {
     const Tab = createBottomTabNavigator();
-
-
     return (
         <Tab.Navigator
             screenOptions={({route}) => ({

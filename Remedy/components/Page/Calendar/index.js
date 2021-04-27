@@ -16,28 +16,31 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 // import { DatePicker } from 'antd';
 
- function CalendarPage(props) {
+async function CalendarPage(props) {
     const {navigation} = props
     const [markedDates, setMarkedDates] = React.useState(null);
+    const [medModalVisible, setMedModalVisible] = useState(false);
+    const [appModalVisible, setAppModalVisible] = useState(false);
     const [dates, setDates] = React.useState(['2021-04-12', '2021-04-30']);
     const appointment = {key: 'Appointment', color: 'red', selectedDotColor: 'red'};
-    let jwt = getJwt();
-    let uid = console.log(getUid());
+    let memory = await getMultiple();
+    let jwt = await memory.get('jwt');
+    let uid = parseFloat(await memory.get('uid'));
 
-    async function getJwt() {
+    async function getMultiple() {
+        let values
+        let map=new Map();
         try {
-            return await AsyncStorage.getItem('jwt')
+            values = await AsyncStorage.multiGet(['jwt', 'uid'])
         } catch (e) {
-            e.getMessage();
+            // read error
         }
+        values.forEach(array=>{
+            map.set(array[0],array[1]);
+        })
+        return map;
     }
-    async function getUid() {
-        try {
-            return parseInt(await AsyncStorage.getItem('uid'))
-        } catch (e) {
-            e.getMessage();
-        }
-    }
+
 
     let medReminderList;
     let appReminderList;
@@ -52,9 +55,9 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
                 'x-access-token': jwt
             }
         }).then((res) => {
-            medReminderList = JSON.parse(res.data);
+
         }).catch(function (error) {
-            console.log(error.response.request._response);
+            console.log(error);
         });
     }
 
@@ -65,16 +68,14 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
                 'x-access-token': jwt
             }
         }).then((res) => {
-            appReminderList = JSON.parse(res.data);
+
         }).catch(function (error) {
-            console.log(error.response.request._response);
+            console.log(error);
         });
     }
 
     //-------------Initialisation----------------------------
 
-    const [medModalVisible, setMedModalVisible] = useState(false);
-    const [appModalVisible, setAppModalVisible] = useState(false);
 
     // function add
     return (
