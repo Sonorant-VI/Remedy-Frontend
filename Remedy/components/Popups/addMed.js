@@ -7,6 +7,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import {TextInput} from 'react-native-gesture-handler';
 import axios from "axios";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const AddMed = ({modalVisible, setModalVisible}) => {
     const [date, setDate] = useState(new Date())
@@ -65,11 +66,22 @@ const AddMed = ({modalVisible, setModalVisible}) => {
         let value;
         try {
             value = await AsyncStorage.getItem('jwt');
+            userId = await AsyncStorage.getItem('uid');
         } catch(e) {
             console.log("couldn't acces to jwt in local storage");
         }
         console.log(value);
         return value;
+    }
+
+    const getUserId = async () => {
+        let userId;
+        try {
+            userId = await AsyncStorage.getItem('uid');
+        } catch(e) {
+            console.log("Couldn't access the user id in local storage");
+        }
+        return userId;
     }
 
     async function sendCreateReminder() {
@@ -79,13 +91,14 @@ const AddMed = ({modalVisible, setModalVisible}) => {
         //console.log(date);
         
         const localToken = await getJwt();
+        const id = await getUserId();
         //console.log(localToken);
 
         axios.post('http://sonorant-vi.herokuapp.com/api/medReminder/',{
-            time:'2021-01-01 12:00:00',
+            time:date,
             brandName:brand,
             genericName:generic,
-            patientId:1
+            patientId:id
         },
         {
             headers: {
@@ -93,7 +106,6 @@ const AddMed = ({modalVisible, setModalVisible}) => {
             }
         
         }).then((res)=>{
-
             Alert.alert('Reminder added!')
         }).catch(function (error) {
             console.log(error.response.request._response);
