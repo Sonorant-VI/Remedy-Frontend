@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import {Modal, Text, Button, Alert} from 'react-native';
+import {Modal, Text, Button, Alert, ScrollView} from 'react-native';
 
 import {ModalButton, ModalContainer, ModalView, StyledInput, ModalAction, ModalActionGroup, ModalIcon, HeaderTitle, colors, styles} from "../Popups/styles";
 import {AntDesign} from '@expo/vector-icons'
@@ -57,16 +57,40 @@ const AddMed = ({modalVisible, setModalVisible}) => {
         
     //     settodoInputValue("");
     // }
-function CreateRem() {
-    
-    Alert.alert('Reminder added!')
+    const [datetime, setDateTime] = React.useState()
+    const [brand, setBrandName] = React.useState()
+    const [generic, setGenericName] = React.useState()
 
-    // TODO: API call to create med reminder
-}
+    const getJwt = async () => {
+        try {
+            const value = await AsyncStorage.getItem('jwt');
+            if(value !== null) {
+                return value;
+            }
+        } catch(e) {
+            console.log("couldn't acces to jwt in local storage");
+        }
+    }
+
+    function sendCreateReminder() {
+
+        axios.post('http://sonorant-vi.herokuapp.com/api/medReminder/',{
+            time:'2021-01-01 12:00:00',
+            brandName:brand,
+            genericName:generic,
+            patientId:1
+        }).then((res)=>{
+            Alert.alert('Reminder added!')
+        }).catch(function (error) {
+            console.log(error.response.request._response);
+        });
+    }
 
 
     return (
+        
         <> 
+            
             <TouchableOpacity 
               style={styles.whiteButton}
               onPress={() => {setModalVisible(true)}}>
@@ -74,13 +98,16 @@ function CreateRem() {
                 <Text style={styles.whiteBtnText}>Medication</Text>
             </TouchableOpacity>
 
+            
             <Modal 
                 animationType="slide"
                 transparent={true}
                 visible={modalVisible}
                 onRequestClose={handleCloseModal}
-            >
+            >   
+                <ScrollView style={styles.scrollView}>
                 <ModalContainer>
+                    
                     <ModalView>
                         <ModalIcon>
                             <HeaderTitle>Add Medications</HeaderTitle>
@@ -97,24 +124,24 @@ function CreateRem() {
                             mode="datetime"
                             is24Hour={true}
                             display="spinner"
-                            onChange={(datetime) => {
+                            onConfirm={(datetime) => {
                                 setDateTime(datetime)
                             }}
                             />
                         )}
-                        <Text>Brand Name : </Text>
-                        <TextInput placeholder="Enter brand name..." onChangeText={(brandName) => {
-                            setBrandName(brandName);
+                        <Text style={styles.textInputHeader}>Brand Name</Text>
+                        <TextInput style={styles.textInput} placeholder="Enter brand name..." onChangeText={(brand) => {
+                            setBrandName(brand);
                          }}/>
-                        <Text>Generic Name : </Text>
-                        <TextInput placeholder="Enter generic name..." onChangeText={(genericName) => {
-                            setBrandName(genericName);
+                        <Text style={styles.textInputHeader}>Generic Name</Text>
+                        <TextInput style={styles.textInput} placeholder="Enter generic name..." onChangeText={(generic) => {
+                            setGenericName(generic);
                          }}/>
 
                         <Button 
-                        onPress={CreateRem}
+                        onPress={sendCreateReminder}
                         title="Create Reminder"
-                        color="#841584"
+                        color="#0c6d3f"
                         accessibilityLabel="Learn more about this purple button"
                         //onPress={() => Alert.alert('Reminder added!')}
                         />
@@ -139,10 +166,11 @@ function CreateRem() {
                         </ModalActionGroup>
                     </ModalView>
                 </ModalContainer>
+                </ScrollView>
             </Modal>
+            
         </>
 
     );
 }
-
 export default AddMed;
