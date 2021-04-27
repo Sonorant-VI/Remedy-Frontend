@@ -25,7 +25,7 @@ function LogIn() {
             const token = ["jwt", res.data.jwt]
             const uid = ["uid", JSON.stringify(res.data.id)]
             try {
-                await AsyncStorage.multiSet([token, uid])
+                await AsyncStorage.multiSet([token, uid]);
             } catch (e) {
                 console.log(e);
             }
