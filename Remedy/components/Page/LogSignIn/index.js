@@ -9,22 +9,22 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import styles from './styles';
 
 import axios from "axios";
-
+import {useEffect} from "react";
 
 function LogIn() {
     const [userEmail, setUserEmail] = React.useState()
     const [userPassword, setUserPassword] = React.useState()
 
     function sendLogin() {
-        axios.post('http://sonorant-vi.herokuapp.com/api/auth/login',{
-            email:userEmail,
-            password:userPassword
-        }).then( async (res)=>{
-            const token=["jwt",res.data.jwt]
-            const uid=["uid",JSON.stringify(res.data.id)]
-            try{
-                await AsyncStorage.multiSet([token,uid])
-            }catch (e){
+        axios.post('http://sonorant-vi.herokuapp.com/api/auth/login', {
+            email: userEmail,
+            password: userPassword
+        }).then(async (res) => {
+            const token = ["jwt", res.data.jwt]
+            const uid = ["uid", JSON.stringify(res.data.id)]
+            try {
+                await AsyncStorage.multiSet([token, uid])
+            } catch (e) {
                 console.log(e);
             }
         }).catch(function (error) {
@@ -34,13 +34,12 @@ function LogIn() {
     }
 
 
-
     return (
         <View style={styles.container}>
             <Text style={styles.text}>Log In</Text>
             <View style={styles.logInBox}>
                 <Text>email</Text>
-                <TextInput placeholder="input email"  onChangeText={(email) => {
+                <TextInput placeholder="input email" onChangeText={(email) => {
                     setUserEmail(email);
                 }}/>
                 <Text>password</Text>
@@ -66,22 +65,26 @@ function SignUp(props) {
     const toggleSwitch = () => (previousState => !previousState)
 
     function sendRegister() {
-        switch (userRole){
-            case "user": setUserRole("passive");
-            case "authUser": setUserRole("active");
-            case "doctor": setUserRole("passive");
-            default:setUserRole("passive");
+        switch (userRole) {
+            case "user":
+                setUserRole("passive");
+            case "authUser":
+                setUserRole("active");
+            case "doctor":
+                setUserRole("passive");
+            default:
+                setUserRole("passive");
         }
         axios.post('http://sonorant-vi.herokuapp.com/api/auth/register', {
             email: userEmail,
             password: userPassword,
             role: userRole
-        }).then( async (res) => {
-            const token=["jwt",res.data.jwt]
-            const uid=["uid",JSON.stringify(res.data.id)]
-            try{
-                await AsyncStorage.multiSet([token,uid])
-            }catch (e){
+        }).then(async (res) => {
+            const token = ["jwt", res.data.jwt]
+            const uid = ["uid", JSON.stringify(res.data.id)]
+            try {
+                await AsyncStorage.multiSet([token, uid])
+            } catch (e) {
                 console.log(e);
             }
         }).catch(function (error) {
@@ -148,6 +151,7 @@ function SignUp(props) {
         </View>
     );
 }
+
 
 function LogSignIn() {
     const Tab = createBottomTabNavigator();
