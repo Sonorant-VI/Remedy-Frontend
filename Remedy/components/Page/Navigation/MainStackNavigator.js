@@ -94,14 +94,12 @@ function MainStackNavigator() {
 
   return (
     <NavigationContainer>
-      <Tab.Navigator
-        initialRouteName="LogSignIn"
+      <Tab.Navigator   
         tabBarOptions={{
         activeTintColor: '#09B0DD',
         }} 
       >
-
-      <Tab.Screen
+   <Tab.Screen
         name="AccountsStack"
         component={AccountsStack}
         options={{
@@ -111,7 +109,7 @@ function MainStackNavigator() {
               name="account-circle-outline"
               color={color}
               size={size}
-            />
+            /> 
           ),
         }}  
         />
