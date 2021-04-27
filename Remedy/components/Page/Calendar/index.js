@@ -11,19 +11,76 @@ import {Ionicons} from '@expo/vector-icons';
 import {Fontisto} from '@expo/vector-icons';
 import AddMed from '../../Popups/addMed';
 import AddApp from '../../Popups/addApp';
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import axios from "axios";
 
 // import { DatePicker } from 'antd';
 
 function CalendarPage(props) {
     const {navigation} = props
-
     const [markedDates, setMarkedDates] = React.useState(null);
     const [dates, setDates] = React.useState(['2021-04-12', '2021-04-30']);
+    const [medReminder, setMedReminder] = React.useState();
+    const [appReminder, setAppReminder] = React.useState();
+    let jwt;
+    let uid;
+    let header;
+    setMemory().then(r => {
+        jwt = r.get('jwt');
+        uid = parseFloat(r.get('uid'));
+        header = {
+            headers: {token: jwt}
+        }
+    }).then(async () => {
+        console.log('APP:' +  await getMedReminderList() + ' MED:' +await getAppReminderList());
+    })
+
+
+    async function setMemory() {
+        let values
+        let map = new Map();
+        try {
+            values = await AsyncStorage.multiGet(['jwt', 'uid'])
+        } catch (e) {
+            console.log(e);
+        }
+        values.forEach(array => {
+            map.set(array[0], array[1]);
+        })
+        return map;
+    }
 
     function addDates() {
         let obj = dates.reduce((c, v) => Object.assign(c, {[v]: {marked: true, dotColor: 'red'},}), {},);
         console.log(obj);
         setMarkedDates(obj);
+    }
+
+    //get all MedReminders
+    async function getMedReminderList() {
+        let listMed;
+        listMed = await axios.get('http://sonorant-vi.herokuapp.com/api/medReminder/' + uid, header
+        ).then((res) => {
+            return res.data;
+        }).then(data => {
+            return data;
+        }).catch(function (error) {
+        })
+        return listMed;
+    }
+
+    //get all the appreminder
+    async function getAppReminderList() {
+        let listApp;
+        listApp = await axios.get('http://sonorant-vi.herokuapp.com/api/appReminder/' + uid, header)
+            .then((res) => {
+                return res.data;
+
+            }).then(data => {
+                return data;
+            }).catch(function (error) {
+            });
+        return listApp;
     }
 
 

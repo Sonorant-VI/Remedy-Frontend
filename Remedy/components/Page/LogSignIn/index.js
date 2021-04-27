@@ -28,7 +28,7 @@ function LogIn() {
                 console.log(e);
             }
         }).catch(function (error) {
-            console.log(error);
+            console.log(error.message);
         });
 
     }
