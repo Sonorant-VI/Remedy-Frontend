@@ -22,45 +22,21 @@ function CalendarPage(props) {
     const [dates, setDates] = React.useState(['2021-04-12', '2021-04-30']);
     const appointmentDots = {key:'appointment', color: 'red', selectedDotColor: 'blue'};
     const [appReminder, setAppReminder] = React.useState(null);
-    let jwt;
-    let uid;
-    let header;
-
-    setMemory().then(r => {
-        jwt = r.get('jwt');
-        uid = parseFloat(r.get('uid'));
-        header = {
-            headers: {token: jwt}
-        }
-    }).then(async () => {
-        let appReminderList=await getAppReminderList();
-        let medReminderList=await getMedReminderList();
-        setAppReminder(appReminderList);
-        if(appReminderList && medReminderList) {
-            const appReminderListString = ["appReminder", JSON.stringify(appReminderList)];
-            const medReminderListString = ["medReminder", JSON.stringify(medReminderList)];
-            try {
-                await AsyncStorage.multiSet([appReminderListString, medReminderListString]);
-            } catch (e) {
-                console.log(e);
-            }
-        }
+    getMyObject().then(r=>{
+        console.log(r);
     });
 
-
-    async function setMemory() {
-        let values
-        let map = new Map();
+    async function getMyObject(){
+       let value;
         try {
-            values = await AsyncStorage.multiGet(['jwt', 'uid'])
-        } catch (e) {
-            console.log(e);
+            const jsonValue = await AsyncStorage.getItem('appReminder')
+            value= jsonValue != null ? JSON.parse(jsonValue) : null
+        } catch(e) {
+            // read error
         }
-        values.forEach(array => {
-            map.set(array[0], array[1]);
-        })
-        return map;
+        return value;
     }
+
 
     function addDates() {
         let obj = dates.reduce((c, v) => Object.assign(c, {[v]: {marked: true, dotColor: 'red'},}), {},);
@@ -68,42 +44,7 @@ function CalendarPage(props) {
         setMarkedDates(obj);
     }
 
-    //get all MedReminders
-    async function getMedReminderList() {
-        let listMed;
-        listMed = await axios.get('http://sonorant-vi.herokuapp.com/api/medReminder/' + uid, header
-        ).then((res) => {
-            return res.data;
-        }).then(data => {
-            return data;
-        }).catch(function (error) {
-        })
-        return listMed;
-    }
-
-    //get all the appreminder
-    async function getAppReminderList() {
-        let listApp;
-        listApp = await axios.get('http://sonorant-vi.herokuapp.com/api/appReminder/' + uid, header)
-            .then((res) => {
-                return res.data;
-            }).then(data => {
-                return data;
-            }).catch(function (error) {
-            });
-        return listApp;
-    }
-
-    function markDates(list){
-
-       for( let obj of list){
-
-       }
-
-    }
-
     const [medModalVisible, setMedModalVisible] = useState(false)
-
     const [appModalVisible, setAppModalVisible] = useState(false)
 
     // function add
@@ -116,7 +57,9 @@ function CalendarPage(props) {
                         onDayPress={(day) => {
                             console.log(day);
                         }}
-                        markedDates={markedDates}/>
+                        markedDates={
+                            markedDates
+                        }/>
 
                     <View style={{
                         borderBottomColor: 'black',
