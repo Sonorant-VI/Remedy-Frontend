@@ -26,11 +26,10 @@ function Home(props) {
     const [appReminder, setAppReminder] = React.useState(null);
     const [medReminder, setMedReminder] = React.useState(null);
     // get all reminders
-    const initialTodos = [];
+
     let jwt;
     let uid;
     let header;
-
     useEffect(() => {
         setMemory().then(r => {
             jwt = r.get('jwt');
@@ -52,6 +51,8 @@ function Home(props) {
                     console.log(e);
                 }
             }
+        }).then(()=>{
+            fillTodos();
         });
 
 
@@ -96,27 +97,49 @@ function Home(props) {
             return listApp;
         }
     },[]);
-    fillTodos();
+
+    const initialTodos = [
+        {
+            title: "Do an assignment or something",
+            date: "Fri, 08 April 2021 16:32:11 GMT",
+            key: "1"
+        }, {
+            title: "Go on a run ",
+            date: "Fri, 28 April 2021 16:12:11 GMT",
+            key: "2"
+        }, {
+            title: "Watch a movie",
+            date: "Fri, 18 April 2021 16:32:11 GMT",
+            key: "3"
+        }]
+
+
 
     function fillTodos(){
+        let todo=[]
         if(appReminder) {
-            let val;
-
-            let maxsize= appReminder.length;
+            let i= 1;
             for (let userObject of appReminder) {
-                maxsize--;
-                val += '{ "title" : ' + JSON.stringify(userObject.purpose) + ', "date" : ' + JSON.stringify(userObject.start) + ', "key" : ' + maxsize.toString() +'},';
+                i++;
+                let obj=new Object();
+                obj.title=userObject.purpose;
+                obj.key=i;
+                obj.date=userObject.start;
+                todo.push(obj);
             };
-            val=val.slice(0,-1);
-            val=val.substring(9);
-            initialTodos.push(val);
         }
+        useEffect(()=>{
+            handleAddTodo(todo);
+        },[todo]);
+        console.log(todo);
+        return todo;
     }
+
+
     // initial notifications
 
 
     const [todos, setTodos] = useState(initialTodos);
-
     //Modal Visibility & input Value
     const [modalVisible, setModalVisible] = useState(false);
     const [todoInputValue, settodoInputValue] = useState();
@@ -127,9 +150,9 @@ function Home(props) {
         setTodos(newTodos);
         setModalVisible(false);
     }
-
     //Editing
     const [todoToBeEdited, setTodoToBeEdited] = useState(null);
+
 
     const handleTriggerEdit = (item) => {
         setTodoToBeEdited(item);
