@@ -1,14 +1,18 @@
 import React, { useState } from 'react';
-import {Modal, Text, Button, Alert} from 'react-native';
+import {Modal, Text, Button, Alert, ScrollView} from 'react-native';
 
 import {ModalButton, ModalContainer, ModalView, StyledInput, ModalAction, ModalActionGroup, ModalIcon, HeaderTitle, colors, styles} from "../Popups/styles";
 import {AntDesign} from '@expo/vector-icons'
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import {TextInput} from 'react-native-gesture-handler';
+import axios from "axios";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const AddMed = ({modalVisible, setModalVisible}) => {
     const [date, setDate] = useState(new Date())
+    const [brand, setBrandName] = React.useState()
+    const [generic, setGenericName] = React.useState()
     // const [date, setDate] = useState(new Date(1598051730000));
     const [mode, setMode] = useState('dateTime')
     const [show, setShow] = useState(false)
@@ -57,16 +61,62 @@ const AddMed = ({modalVisible, setModalVisible}) => {
         
     //     settodoInputValue("");
     // }
-function CreateRem() {
-    
-    Alert.alert('Reminder added!')
 
-    // TODO: API call to create med reminder
-}
+    const getJwt = async () => {
+        let value;
+        try {
+            value = await AsyncStorage.getItem('jwt');
+            userId = await AsyncStorage.getItem('uid');
+        } catch(e) {
+            console.log("couldn't acces to jwt in local storage");
+        }
+        console.log(value);
+        return value;
+    }
+
+    const getUserId = async () => {
+        let userId;
+        try {
+            userId = await AsyncStorage.getItem('uid');
+        } catch(e) {
+            console.log("Couldn't access the user id in local storage");
+        }
+        return userId;
+    }
+
+    async function sendCreateReminder() {
+
+        //console.log(brand);
+        //console.log(generic);
+        console.log(date);
+        
+        const localToken = await getJwt();
+        const id = await getUserId();
+        //console.log(localToken);
+
+        axios.post('http://sonorant-vi.herokuapp.com/api/medReminder/',{
+            time:date,
+            brandName:brand,
+            genericName:generic,
+            patientId:id
+        },
+        {
+            headers: {
+              token: localToken
+            }
+        
+        }).then((res)=>{
+            Alert.alert('Reminder added!')
+        }).catch(function (error) {
+            console.log(error.response.request._response);
+        });
+    }
 
 
     return (
+        
         <> 
+            
             <TouchableOpacity 
               style={styles.whiteButton}
               onPress={() => {setModalVisible(true)}}>
@@ -74,13 +124,16 @@ function CreateRem() {
                 <Text style={styles.whiteBtnText}>Medication</Text>
             </TouchableOpacity>
 
+            
             <Modal 
                 animationType="slide"
                 transparent={true}
                 visible={modalVisible}
                 onRequestClose={handleCloseModal}
-            >
+            >   
+                <ScrollView style={styles.scrollView}>
                 <ModalContainer>
+                    
                     <ModalView>
                         <ModalIcon>
                             <HeaderTitle>Add Medications</HeaderTitle>
@@ -97,24 +150,22 @@ function CreateRem() {
                             mode="datetime"
                             is24Hour={true}
                             display="spinner"
-                            onChange={(datetime) => {
-                                setDateTime(datetime)
-                            }}
+                            onChange={onChange}
                             />
                         )}
-                        <Text>Brand Name : </Text>
-                        <TextInput placeholder="Enter brand name..." onChangeText={(brandName) => {
-                            setBrandName(brandName);
+                        <Text style={styles.textInputHeader}>Brand Name</Text>
+                        <TextInput style={styles.textInput} placeholder="Enter brand name..." onChangeText={(brand) => {
+                            setBrandName(brand);
                          }}/>
-                        <Text>Generic Name : </Text>
-                        <TextInput placeholder="Enter generic name..." onChangeText={(genericName) => {
-                            setBrandName(genericName);
+                        <Text style={styles.textInputHeader}>Generic Name</Text>
+                        <TextInput style={styles.textInput} placeholder="Enter generic name..." onChangeText={(generic) => {
+                            setGenericName(generic);
                          }}/>
 
                         <Button 
-                        onPress={CreateRem}
+                        onPress={sendCreateReminder}
                         title="Create Reminder"
-                        color="#841584"
+                        color="#0c6d3f"
                         accessibilityLabel="Learn more about this purple button"
                         //onPress={() => Alert.alert('Reminder added!')}
                         />
@@ -139,10 +190,11 @@ function CreateRem() {
                         </ModalActionGroup>
                     </ModalView>
                 </ModalContainer>
+                </ScrollView>
             </Modal>
+            
         </>
 
     );
 }
-
 export default AddMed;

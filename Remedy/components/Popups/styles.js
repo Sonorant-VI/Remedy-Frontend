@@ -37,6 +37,23 @@ export const styles = StyleSheet.create({
     color: '#222',
     textAlign: 'center',
   },
+  textInputHeader: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    alignItems: "center",
+    marginLeft:15,
+  },
+  textInput: {
+    fontSize: 16,
+    borderWidth: 2,
+    borderColor: '#222',
+    padding: 15,
+    margin: 15,
+  },
+  submitButton: {
+    borderWidth:2,
+    color:'black',
+  }
 });
 
 export const Container = styled.SafeAreaView`
