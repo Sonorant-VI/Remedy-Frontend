@@ -36,12 +36,14 @@ function CalendarPage(props) {
         let appReminderList=await getAppReminderList();
         let medReminderList=await getMedReminderList();
         setAppReminder(appReminderList);
-        const appReminderListString= ["appReminder",JSON.stringify( appReminderList)];
-        const medReminderListString= ["medReminder",JSON.stringify( medReminderList)];
-        try{
-            await AsyncStorage.multiSet([appReminderListString, medReminderListString]);
-        }catch (e) {
-            console.log(e);
+        if(appReminderList && medReminderList) {
+            const appReminderListString = ["appReminder", JSON.stringify(appReminderList)];
+            const medReminderListString = ["medReminder", JSON.stringify(medReminderList)];
+            try {
+                await AsyncStorage.multiSet([appReminderListString, medReminderListString]);
+            } catch (e) {
+                console.log(e);
+            }
         }
     });
 
@@ -85,7 +87,6 @@ function CalendarPage(props) {
         listApp = await axios.get('http://sonorant-vi.herokuapp.com/api/appReminder/' + uid, header)
             .then((res) => {
                 return res.data;
-
             }).then(data => {
                 return data;
             }).catch(function (error) {
@@ -93,6 +94,13 @@ function CalendarPage(props) {
         return listApp;
     }
 
+    function markDates(list){
+
+       for( let obj of list){
+
+       }
+
+    }
 
     const [medModalVisible, setMedModalVisible] = useState(false)
 
