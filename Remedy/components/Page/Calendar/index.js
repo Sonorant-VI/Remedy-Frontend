@@ -20,11 +20,12 @@ function CalendarPage(props) {
     const {navigation} = props
     const [markedDates, setMarkedDates] = React.useState(null);
     const [dates, setDates] = React.useState(['2021-04-12', '2021-04-30']);
-    const [medReminder, setMedReminder] = React.useState();
-    const [appReminder, setAppReminder] = React.useState();
+    const appointmentDots = {key:'appointment', color: 'red', selectedDotColor: 'blue'};
+    const [appReminder, setAppReminder] = React.useState(null);
     let jwt;
     let uid;
     let header;
+
     setMemory().then(r => {
         jwt = r.get('jwt');
         uid = parseFloat(r.get('uid'));
@@ -32,8 +33,17 @@ function CalendarPage(props) {
             headers: {token: jwt}
         }
     }).then(async () => {
-        console.log('APP:' +  await getMedReminderList() + ' MED:' +await getAppReminderList());
-    })
+        let appReminderList=await getAppReminderList();
+        let medReminderList=await getMedReminderList();
+        setAppReminder(appReminderList);
+        const appReminderListString= ["appReminder",JSON.stringify( appReminderList)];
+        const medReminderListString= ["medReminder",JSON.stringify( medReminderList)];
+        try{
+            await AsyncStorage.multiSet([appReminderListString, medReminderListString]);
+        }catch (e) {
+            console.log(e);
+        }
+    });
 
 
     async function setMemory() {
