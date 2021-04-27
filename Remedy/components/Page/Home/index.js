@@ -18,6 +18,7 @@ import InputModal from '../../Notifications/InputModal';
 import {List} from 'native-base';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
+import stringifySafe from "react-native/Libraries/Utilities/stringifySafe";
 
 
 function Home(props) {
@@ -25,9 +26,11 @@ function Home(props) {
     const [appReminder, setAppReminder] = React.useState(null);
     const [medReminder, setMedReminder] = React.useState(null);
     // get all reminders
+    const initialTodos = [];
     let jwt;
     let uid;
     let header;
+
     useEffect(() => {
         setMemory().then(r => {
             jwt = r.get('jwt');
@@ -90,32 +93,27 @@ function Home(props) {
                     return data;
                 }).catch(function (error) {
                 });
-            console.log(listApp);
             return listApp;
         }
     },[]);
+    fillTodos();
 
+    function fillTodos(){
+        if(appReminder) {
+            let val;
 
-
-
+            let maxsize= appReminder.length;
+            for (let userObject of appReminder) {
+                maxsize--;
+                val += '{ "title" : ' + JSON.stringify(userObject.purpose) + ', "date" : ' + JSON.stringify(userObject.start) + ', "key" : ' + maxsize.toString() +'},';
+            };
+            val=val.slice(0,-1);
+            val=val.substring(9);
+            initialTodos.push(val);
+        }
+    }
     // initial notifications
-    appReminder.map((reminder)=>{
 
-
-    })
-    const initialTodos = [{
-        title: "Do an assignment or something",
-        date: "Fri, 08 April 2021 16:32:11 GMT",
-        key: "1"
-    }, {
-        title: "Go on a run ",
-        date: "Fri, 28 April 2021 16:12:11 GMT",
-        key: "2"
-    }, {
-        title: "Watch a movie",
-        date: "Fri, 18 April 2021 16:32:11 GMT",
-        key: "3"
-    }]
 
     const [todos, setTodos] = useState(initialTodos);
 
