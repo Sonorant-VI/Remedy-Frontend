@@ -1,14 +1,40 @@
-import React from 'react';
-import {Modal, Text} from 'react-native';
+import React, { useState } from 'react';
+import {Modal, Text, Scrollview} from 'react-native';
 
 import {ModalButton, ModalContainer, ModalView, StyledInput, ModalAction, ModalActionGroup, ModalIcon, HeaderTitle, colors, styles} from "../Popups/styles";
 import {AntDesign} from '@expo/vector-icons'
+import DateTimePicker from '@react-native-community/datetimepicker';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import {TextInput} from 'react-native-gesture-handler';
 
 const AddApp = ({modalVisible, setModalVisible}) => {
 
+    const [date, setDate] = useState(new Date())
+    const [purpose, setPurpose] = React.useState()
+    const [brand, setBrandName] = React.useState()
+
+    const onChange = (event, selectedDate) => {
+        const currentDate = selectedDate || date;
+        setShow(Platform.OS === 'android');
+        setDate(currentDate);
+    };
+    
+    const showMode = (currentMode) => {
+        setShow(true);
+        setMode(currentMode);
+    };
+        
+    const showDatepicker = () => {
+        showMode('date');
+    };
+        
+    const showTimepicker = () => {
+        showMode('time');
+    };
+    
     const handleCloseModal = () => {
-        setModalVisible(false); }
+            setModalVisible(false); 
+    }
     //     settodoInputValue("");
     //     setTodoToBeEdited(null);
     // }

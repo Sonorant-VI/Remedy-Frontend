@@ -6,9 +6,12 @@ import {AntDesign} from '@expo/vector-icons'
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import {TextInput} from 'react-native-gesture-handler';
+import axios from "axios";
 
 const AddMed = ({modalVisible, setModalVisible}) => {
     const [date, setDate] = useState(new Date())
+    const [brand, setBrandName] = React.useState()
+    const [generic, setGenericName] = React.useState()
     // const [date, setDate] = useState(new Date(1598051730000));
     const [mode, setMode] = useState('dateTime')
     const [show, setShow] = useState(false)
@@ -57,29 +60,40 @@ const AddMed = ({modalVisible, setModalVisible}) => {
         
     //     settodoInputValue("");
     // }
-    const [datetime, setDateTime] = React.useState()
-    const [brand, setBrandName] = React.useState()
-    const [generic, setGenericName] = React.useState()
 
     const getJwt = async () => {
+        let value;
         try {
-            const value = await AsyncStorage.getItem('jwt');
-            if(value !== null) {
-                return value;
-            }
+            value = await AsyncStorage.getItem('jwt');
         } catch(e) {
             console.log("couldn't acces to jwt in local storage");
         }
+        console.log(value);
+        return value;
     }
 
-    function sendCreateReminder() {
+    async function sendCreateReminder() {
+
+        //console.log(brand);
+        //console.log(generic);
+        //console.log(date);
+        
+        const localToken = await getJwt();
+        //console.log(localToken);
 
         axios.post('http://sonorant-vi.herokuapp.com/api/medReminder/',{
             time:'2021-01-01 12:00:00',
             brandName:brand,
             genericName:generic,
             patientId:1
+        },
+        {
+            headers: {
+              token: localToken
+            }
+        
         }).then((res)=>{
+
             Alert.alert('Reminder added!')
         }).catch(function (error) {
             console.log(error.response.request._response);
@@ -124,9 +138,7 @@ const AddMed = ({modalVisible, setModalVisible}) => {
                             mode="datetime"
                             is24Hour={true}
                             display="spinner"
-                            onConfirm={(datetime) => {
-                                setDateTime(datetime)
-                            }}
+                            onChange={onChange}
                             />
                         )}
                         <Text style={styles.textInputHeader}>Brand Name</Text>
