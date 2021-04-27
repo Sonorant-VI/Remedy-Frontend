@@ -104,7 +104,6 @@ function CalendarPage(props) {
         <ScrollView style={styles.scrollView}>
             <View style={styles.container}>
                 <View style={styles.elementsContainer}>
-                    <Text style={styles.text}>Calendar</Text>
                     <Calendar
                         onDayPress={(day) => {
                             console.log(day);

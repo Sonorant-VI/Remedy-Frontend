@@ -3,8 +3,8 @@
   "devToolsPort": 19002,
   "packagerPort": 19000,
   "packagerPid": null,
-  "expoServerNgrokUrl": null,
-  "packagerNgrokUrl": null,
-  "ngrokPid": null,
+  "expoServerNgrokUrl": "https://v5-6mm.anonymous.remedy-frontend.exp.direct",
+  "packagerNgrokUrl": "https://packager.v5-6mm.anonymous.remedy-frontend.exp.direct",
+  "ngrokPid": 77739,
   "webpackServerPort": null
 }
