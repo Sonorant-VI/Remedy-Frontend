@@ -88,7 +88,7 @@ const AddMed = ({modalVisible, setModalVisible}) => {
 
         //console.log(brand);
         //console.log(generic);
-        //console.log(date);
+        console.log(date);
         
         const localToken = await getJwt();
         const id = await getUserId();

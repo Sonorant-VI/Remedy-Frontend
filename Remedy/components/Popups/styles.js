@@ -40,12 +40,14 @@ export const styles = StyleSheet.create({
   textInputHeader: {
     fontSize: 16,
     fontWeight: 'bold',
+    alignItems: "center",
+    marginLeft:15,
   },
   textInput: {
     fontSize: 16,
     borderWidth: 2,
     borderColor: '#222',
-    padding: 10,
+    padding: 15,
     margin: 15,
   },
   submitButton: {
