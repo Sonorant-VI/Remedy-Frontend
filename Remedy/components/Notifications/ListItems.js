@@ -32,6 +32,7 @@ const ListItems = ({todos, setTodos, handleTriggerEdit}) => {
                     >
                         <>
                             <RowText>{data.item.title}</RowText>
+                            <RowText>{data.item.text}</RowText>
                             <TodoDate>{data.item.date}</TodoDate>
                         </>
                     </ListView>

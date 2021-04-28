@@ -8,17 +8,15 @@
 
 import React, {useEffect, useState} from 'react';
 import {StyleSheet, View, Text, TouchableOpacity} from 'react-native';
-
+import NotificationCalls from "../../Notifications/NotificationsCalls"
 import styles from './styles';
-import FloatingButton from "../../FloatingButton/FloatingButton";
 
 // Notification Components
 import ListItems from '../../Notifications/ListItems';
 import InputModal from '../../Notifications/InputModal';
-import {List} from 'native-base';
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import Moment from 'moment';
 import axios from "axios";
-import stringifySafe from "react-native/Libraries/Utilities/stringifySafe";
 
 
 function Home(props) {
@@ -30,6 +28,7 @@ function Home(props) {
     let jwt;
     let uid;
     let header;
+
     useEffect(() => {
         setMemory().then(r => {
             jwt = r.get('jwt');
@@ -115,14 +114,19 @@ function Home(props) {
             for (let userObject of appReminder) {
                 i++;
                 let obj=new Object();
+                let date=new Date(userObject.start);
+                date=Moment(date).format("dd.mm.yyyy hh:MM:ss");
                 obj.title=userObject.purpose;
+                obj.text=userObject.reminder_msg;
                 obj.key=i;
-                obj.date=userObject.start;
+                obj.date=date;
                 todo.push(obj);
             };
         }
         return todo;
     }
+
+
 
     // initial notifications
     const [todos, setTodos] = useState(initialTodos);
@@ -155,15 +159,13 @@ function Home(props) {
         setModalVisible(false);
     }
 
-
     return (
         <>
             <View style={styles.container}>
-
                 <View style={[{flex: 1}, styles.elementsContainer]}>
                     <View style={{flex: 3}}>
                         <ListItems
-                            todos={todos}
+                            todos={fillTodos()}
                             setTodos={setTodos}
                             handleTriggerEdit={handleTriggerEdit}
                         />
