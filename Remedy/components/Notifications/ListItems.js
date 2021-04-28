@@ -3,7 +3,17 @@ import React, {useState} from 'react';
 import {SwipeListView} from "react-native-swipe-list-view";
 import {Entypo} from "@expo/vector-icons";
 
-import {ListView, TodoText, TodoDate, colors, HiddenButton, SwipedTodoText, ListViewHidden} from "../Notifications/styles";
+import {
+    ListView,
+    TodoText,
+    TodoDate,
+    colors,
+    HiddenButton,
+    SwipedTodoText,
+    ListViewHidden,
+    TodoTitle
+} from "../Notifications/styles";
+
 
 const ListItems = ({todos, setTodos, handleTriggerEdit}) => {
     //For styling currently swiped todo row
@@ -31,8 +41,8 @@ const ListItems = ({todos, setTodos, handleTriggerEdit}) => {
                         }}
                     >
                         <>
-                            <RowText>{data.item.title}</RowText>
-                            <RowText>{data.item.text}</RowText>
+                            <TodoTitle>{data.item.title}</TodoTitle>
+                            <TodoText>{data.item.text}</TodoText>
                             <TodoDate>{data.item.date}</TodoDate>
                         </>
                     </ListView>
