@@ -117,13 +117,14 @@ function Home(props) {
                 let obj=new Object();
                 let date=new Date(userObject.start);
                 date=Moment(date).format("dd/mm/yyyy hh:MM:ss");
-                obj.title=userObject.purpose;
-                obj.text=userObject.reminder_msg;
-                obj.key=i;
-                obj.date=date;
+                obj.title=userObject.purpose.toString();
+                obj.text=userObject.reminder_msg.toString();
+                obj.key=i.toString();
+                obj.date=date.toString();
                 todo.push(obj);
             };
         }
+
         return todo;
     }
 
