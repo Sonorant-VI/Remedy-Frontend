@@ -8,7 +8,8 @@
 
 import React, {useEffect, useState} from 'react';
 import {StyleSheet, View, Text, TouchableOpacity} from 'react-native';
-import NotificationCalls from "../../Notifications/NotificationsCalls"
+import {NotificationCalls,registerForPushNotificationsAsync} from "../../Notifications/NotificationsCalls";
+
 import styles from './styles';
 
 // Notification Components
@@ -115,7 +116,7 @@ function Home(props) {
                 i++;
                 let obj=new Object();
                 let date=new Date(userObject.start);
-                date=Moment(date).format("dd.mm.yyyy hh:MM:ss");
+                date=Moment(date).format("dd/mm/yyyy hh:MM:ss");
                 obj.title=userObject.purpose;
                 obj.text=userObject.reminder_msg;
                 obj.key=i;
@@ -124,6 +125,19 @@ function Home(props) {
             };
         }
         return todo;
+    }
+
+    function fillPushNotif(obj){
+        let expoPushToken=registerForPushNotificationsAsync;
+        const message = {
+            content: {
+                title: "You've got mail! 📬",
+                body: 'Here is the notification body',
+                data: { data: 'goes here' },
+            },
+            trigger: { seconds: 2 },
+        };
+
     }
 
 
