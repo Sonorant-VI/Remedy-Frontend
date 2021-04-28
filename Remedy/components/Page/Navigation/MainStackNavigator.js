@@ -1,32 +1,47 @@
 import React, { useEffect } from 'react';
-// import { useDispatch, useSelector } from 'react-redux';
-// import { setToken } from '../store/actions/user';
-// import AsyncStorage from '@react-native-community/async-storage';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import MainStack from '../Navigation/MainStack';
 import LogInStack from '../Navigation/LogInStack';
 
+import { NavigationContainer } from '@react-navigation/native';
 
-const MainStackNavigator = () => {
 
-//   const dispatch = useDispatch();
-//   const user = useSelector(state => state.user);
 
-//   useEffect(() => {
-//     const getToken = async () => dispatch(setToken(await AsyncStorage.getItem('token')));
-//     getToken();
-//   }, [])
+function MainStackNavigator() {
 
-//   return (
-//     <NavigationContainer>
-//         {(user.token == null)
-//             ? <LogInStack /> : <MainStack />
-//         }
-//     </NavigationContainer>
-//   ) 
-// };
-  // return <MainStack />
-   return <LogInStack />
-  
-};
+  let jwt;
+  useEffect(() => {
+    setMemory(() => {
+      jwt = r.get('jwt');
+      header = {
+        headers: {token: jwt}
+      }
+      console.log('------------');
+      console.log(jwt);
+      console.log('------------');
+    })
 
+    async function setMemory() {
+      let values;
+      try {
+        values = await AsyncStorage.getItem('jwt')
+      } catch (e) {
+        console.log(e);
+      }
+      console.log('------------');
+      console.log(values);
+      console.log('------------');
+      return values
+      
+    }
+  })
+
+  if (jwt != null){
+    return <LogInStack />
+  } 
+  else {
+    return <MainStack />
+  }
+
+}
 export default MainStackNavigator;
