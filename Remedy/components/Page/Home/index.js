@@ -6,8 +6,8 @@
 //   -Colors + Styling will obv be changed 
 //   -Add checkbox for user to select what type of notification they want 
 
-import React, {useState} from 'react';
-import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {StyleSheet, View, Text, TouchableOpacity} from 'react-native';
 
 import styles from './styles';
 import FloatingButton from "../../FloatingButton/FloatingButton";
@@ -15,77 +15,165 @@ import FloatingButton from "../../FloatingButton/FloatingButton";
 // Notification Components
 import ListItems from '../../Notifications/ListItems';
 import InputModal from '../../Notifications/InputModal';
-import { List } from 'native-base';
+import {List} from 'native-base';
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import axios from "axios";
+import stringifySafe from "react-native/Libraries/Utilities/stringifySafe";
 
 
 function Home(props) {
-  const { navigation } = props
+    const {navigation} = props
+    const [appReminder, setAppReminder] = React.useState(null);
+    const [medReminder, setMedReminder] = React.useState(null);
+    // get all reminders
 
-  // initial notifications
-  const initialTodos = [{
-    title: "Do an assignment or something",
-    date: "Fri, 08 April 2021 16:32:11 GMT",
-    key: "1"
-  }, {
-    title: "Go on a run ",
-    date: "Fri, 28 April 2021 16:12:11 GMT",
-    key: "2"
-  }, {
-    title: "Watch a movie",
-    date: "Fri, 18 April 2021 16:32:11 GMT",
-    key: "3"
-  }]
+    let jwt;
+    let uid;
+    let header;
+    useEffect(() => {
+        setMemory().then(r => {
+            jwt = r.get('jwt');
+            uid = parseFloat(r.get('uid'));
+            header = {
+                headers: {token: jwt}
+            }
+        }).then(async () => {
+            let appReminderList = await getAppReminderList();
+            let medReminderList = await getMedReminderList();
+            setAppReminder(appReminderList);
+            setMedReminder(medReminderList);
+            if (appReminderList && medReminderList) {
+                const appReminderListString = ["appReminder", JSON.stringify(appReminderList)];
+                const medReminderListString = ["medReminder", JSON.stringify(medReminderList)];
+                try {
+                    await AsyncStorage.multiSet([appReminderListString, medReminderListString]);
+                } catch (e) {
+                    console.log(e);
+                }
+            }
+        });
+        async function setMemory() {
+            let values
+            let map = new Map();
+            try {
+                values = await AsyncStorage.multiGet(['jwt', 'uid'])
+            } catch (e) {
+                console.log(e);
+            }
+            values.forEach(array => {
+                map.set(array[0], array[1]);
+            })
+            return map;
+        }
+        //get all MedReminders
+        async function getMedReminderList() {
+            let listMed;
+            listMed = await axios.get('http://sonorant-vi.herokuapp.com/api/medReminder/' + uid, header
+            ).then((res) => {
+                return res.data;
+            }).then(data => {
+                return data;
+            }).catch(function (error) {
+            })
+            return listMed;
+        }
 
-  const [todos, setTodos] = useState(initialTodos);
+        //get all the appreminder
+        async function getAppReminderList() {
+            let listApp;
+            listApp = await axios.get('http://sonorant-vi.herokuapp.com/api/appReminder/' + uid, header)
+                .then((res) => {
+                    return res.data;
+                }).then(data => {
+                    return data;
+                }).catch(function (error) {
+                });
+            return listApp;
+        }
+    },[]);
+    fillTodos();
 
-  //Modal Visibility & input Value
-  const [modalVisible, setModalVisible] = useState(false);
-  const [todoInputValue, settodoInputValue] = useState();
+    const initialTodos = [
+        {
+            title: "Do an assignment or something",
+            date: "Fri, 08 April 2021 16:32:11 GMT",
+            key: "1"
+        }, {
+            title: "Go on a run ",
+            date: "Fri, 28 April 2021 16:12:11 GMT",
+            key: "2"
+        }, {
+            title: "Watch a movie",
+            date: "Fri, 18 April 2021 16:32:11 GMT",
+            key: "3"
+        }]
 
-  // function to add a new todo
-  const handleAddTodo = (todo) => {
-    const newTodos = [...todos, todo];
-    setTodos(newTodos);
-    setModalVisible(false);
-  }
+    function fillTodos(){
+        let todo=[]
+        if(appReminder) {
+            let i= 1;
+            for (let userObject of appReminder) {
+                i++;
+                let obj=new Object();
+                obj.title=userObject.purpose;
+                obj.key=i;
+                obj.date=userObject.start;
+                todo.push(obj);
+            };
+        }
+        return todo;
+    }
 
-  //Editing
-  const [todoToBeEdited, setTodoToBeEdited] = useState(null);
+    // initial notifications
+    const [todos, setTodos] = useState(initialTodos);
+    //Modal Visibility & input Value
+    const [modalVisible, setModalVisible] = useState(false);
+    const [todoInputValue, settodoInputValue] = useState();
 
-  const handleTriggerEdit = (item) => {
-    setTodoToBeEdited(item);
-    setModalVisible(true);
-    settodoInputValue(item.title);
-  }
-
-  const handleEditTodo = (editedTodo) => {
-    const newTodos = [...todos];
-    const todoIndex = todos.findIndex((todo) => todo.key === editedTodo.key);
-    newTodos.splice(todoIndex, 1, editedTodo);
-    setTodos(newTodos);
-    setTodoToBeEdited(null);
-    setModalVisible(false);
-  }
-
-
-  return (
-  <>
-  <View style={styles.container}>
-   
-    <View style={[{flex: 1}, styles.elementsContainer]}>
-      <View style={{flex: 3}}>
-        <ListItems 
-          todos={todos}
-          setTodos={setTodos}
-          handleTriggerEdit={handleTriggerEdit}
-        />
-      </View>
-    </View>
-  </View>
-  </>
+    // function to add a new todo
+    const handleAddTodo = (todo) => {
+        const newTodos = [...todos, todo];
+        setTodos(newTodos);
+        setModalVisible(false);
+    }
+    //Editing
+    const [todoToBeEdited, setTodoToBeEdited] = useState(null);
 
 
-  )
+    const handleTriggerEdit = (item) => {
+        setTodoToBeEdited(item);
+        setModalVisible(true);
+        settodoInputValue(item.title);
+    }
+
+    const handleEditTodo = (editedTodo) => {
+        const newTodos = [...todos];
+        const todoIndex = todos.findIndex((todo) => todo.key === editedTodo.key);
+        newTodos.splice(todoIndex, 1, editedTodo);
+        setTodos(newTodos);
+        setTodoToBeEdited(null);
+        setModalVisible(false);
+    }
+
+
+    return (
+        <>
+            <View style={styles.container}>
+
+                <View style={[{flex: 1}, styles.elementsContainer]}>
+                    <View style={{flex: 3}}>
+                        <ListItems
+                            todos={todos}
+                            setTodos={setTodos}
+                            handleTriggerEdit={handleTriggerEdit}
+                        />
+                    </View>
+                </View>
+            </View>
+        </>
+
+
+    )
 }
 
 export default Home;

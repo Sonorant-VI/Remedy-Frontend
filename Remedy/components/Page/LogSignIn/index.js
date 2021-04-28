@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {StyleSheet, View, Text, TouchableOpacity, Image} from 'react-native';
+import {StyleSheet, View, Text, TouchableOpacity, Image, ScrollView, KeyboardAvoidingView} from 'react-native';
 import {RadioButton} from 'react-native-paper';
 import {TextInput} from 'react-native-gesture-handler';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
@@ -25,39 +25,46 @@ function LogIn() {
             const token = ["jwt", res.data.jwt]
             const uid = ["uid", JSON.stringify(res.data.id)]
             try {
-                await AsyncStorage.multiSet([token, uid])
+                await AsyncStorage.multiSet([token, uid]);
             } catch (e) {
                 console.log(e);
             }
         }).catch(function (error) {
-            console.log(error);
+            console.log(error.message);
         });
 
     }
 
 
     return (
-        <View style={styles.container}>
-            <View style={styles.logInBox}>
-                <Image style={styles.logo} source={logoPath} />
-                <View style={styles.accountInfoBox}>
-                    <TextInput style={styles.accountInfo} placeholder="email" onChangeText={(email) => {
-                        setUserEmail(email);
-                    }}/>
+        <KeyboardAvoidingView style={{flex: 1, flexDirection: 'column', justifyContent: 'center',}} behavior="padding"
+                              enabled keyboardVerticalOffset={100}>
+            <ScrollView>
+                <View style={styles.container}>
+                    <View style={styles.logInBox}>
+                        <Image style={styles.logo} source={logoPath}/>
+                        <View style={styles.accountInfoBox}>
+                            <TextInput style={styles.accountInfo} placeholder="email" onChangeText={(email) => {
+                                setUserEmail(email);
+                            }}/>
+                        </View>
+                        <View style={styles.accountInfoBox}>
+                            <TextInput style={styles.accountInfo} placeholder="password" onChangeText={(password) => {
+                                setUserPassword(password);
+                            }}/>
+                        </View>
+                        <TouchableOpacity
+                            style={styles.buttonContainer}
+                            onPress={() => sendLogin()}
+                        >
+                            <Text style={styles.buttonText}>LogIn</Text>
+                        </TouchableOpacity>
+                    </View>
                 </View>
-                <View style={styles.accountInfoBox}>
-                    <TextInput style={styles.accountInfo} placeholder="password" onChangeText={(password) => {
-                        setUserPassword(password);
-                    }}/>
-                </View>
-                <TouchableOpacity
-                    style={styles.buttonContainer}
-                    onPress={() => sendLogin()}
-                >
-                    <Text style={styles.buttonText}>LogIn</Text>
-                </TouchableOpacity>
-            </View>
-        </View>
+            </ScrollView>
+        </KeyboardAvoidingView>
+
+
     );
 }
 
@@ -97,55 +104,61 @@ function SignUp(props) {
     }
 
     return (
-        <View style={styles.container}>
-            <Text style={styles.text}>Sign Up</Text>
-            <View style={styles.signUpBox}>
-                <View style={styles.accountInfoBox}>
-                    <TextInput style={styles.accountInfo} placeholder="email" onChangeText={(email) => {
-                        setUserEmail(email);
-                    }}/>
-                </View>
-                <View style={styles.accountInfoBox}>
-                    <TextInput style={styles.accountInfo} placeholder="password" onChangeText={(password) => {
-                        setUserPassword(password);
-                    }}/>
-                </View>
-                <View style={styles.accountInfoBox}>
-                    <TextInput style={styles.accountInfo} placeholder="check password"/>
-                </View>
-                <Text style={styles.role}>role</Text>
-                <View style={styles.radioButtonContainer}>
-                    <RadioButton
-                        value="user"
-                        status={userRole === 'user' ? 'checked' : 'unchecked'}
-                        onPress={() => setUserRole('user')}
-                    />
-                    <TouchableOpacity onPress={() => setUserRole('user')}>
-                        <Text style={styles.label}>Active User</Text>
-                    </TouchableOpacity>
-                </View>
-                {/* <Text style={styles.desc}>add descriptions..</Text> */}
-                <View style={styles.radioButtonContainer}>
-                    <RadioButton
-                        value="authUser"
-                        status={userRole === 'authUser' ? 'checked' : 'unchecked'}
-                        onPress={() => setUserRole('authUser')}
-                    />
-                    <TouchableOpacity onPress={() => setUserRole('authUser')}>
-                        <Text style={styles.label}>Passive User</Text>
-                    </TouchableOpacity>
-                </View>
-                {/* <Text style={styles.desc}>add descriptions..</Text> */}
-                {/* <Text style={styles.desc}>add descriptions..</Text> */}
-                <TouchableOpacity
-                    style={styles.buttonContainer}
-                    onPress={() => sendRegister()}
-                >
-                    <Text style={styles.buttonText}>SignUp</Text>
+        <KeyboardAvoidingView style={{flex: 1, flexDirection: 'column', justifyContent: 'center',}} behavior="padding"
+                              enabled keyboardVerticalOffset={100}>
+            <ScrollView>
+                <View style={styles.container}>
+                    <Text style={styles.text}>Sign Up</Text>
+                    <View style={styles.signUpBox}>
+                        <View style={styles.accountInfoBox}>
+                            <TextInput style={styles.accountInfo} placeholder="email" onChangeText={(email) => {
+                                setUserEmail(email);
+                            }}/>
+                        </View>
+                        <View style={styles.accountInfoBox}>
+                            <TextInput style={styles.accountInfo} placeholder="password" onChangeText={(password) => {
+                                setUserPassword(password);
+                            }}/>
+                        </View>
+                        <View style={styles.accountInfoBox}>
+                            <TextInput style={styles.accountInfo} placeholder="check password"/>
+                        </View>
+                        <Text style={styles.role}>role</Text>
+                        <View style={styles.radioButtonContainer}>
+                            <RadioButton
+                                value="user"
+                                status={userRole === 'user' ? 'checked' : 'unchecked'}
+                                onPress={() => setUserRole('user')}
+                            />
+                            <TouchableOpacity onPress={() => setUserRole('user')}>
+                                <Text style={styles.label}>Active User</Text>
+                            </TouchableOpacity>
+                        </View>
+                        {/* <Text style={styles.desc}>add descriptions..</Text> */}
+                        <View style={styles.radioButtonContainer}>
+                            <RadioButton
+                                value="authUser"
+                                status={userRole === 'authUser' ? 'checked' : 'unchecked'}
+                                onPress={() => setUserRole('authUser')}
+                            />
+                            <TouchableOpacity onPress={() => setUserRole('authUser')}>
+                                <Text style={styles.label}>Passive User</Text>
+                            </TouchableOpacity>
+                        </View>
+                        {/* <Text style={styles.desc}>add descriptions..</Text> */}
 
-                </TouchableOpacity>
-            </View>
-        </View>
+                        {/* <Text style={styles.desc}>add descriptions..</Text> */}
+                        <TouchableOpacity
+                            style={styles.buttonContainer}
+                            onPress={() => sendRegister()}
+                        >
+                            <Text style={styles.buttonText}>SignUp</Text>
+
+                        </TouchableOpacity>
+                    </View>
+                </View>
+            </ScrollView>
+        </KeyboardAvoidingView>
     );
 }
 
