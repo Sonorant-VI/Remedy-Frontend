@@ -18,6 +18,7 @@ function LogIn() {
     let logoPath = require('../../../assets/logo-circle.png');
 
     function sendLogin() {
+        clearAll();
         axios.post('http://sonorant-vi.herokuapp.com/api/auth/login', {
             email: userEmail,
             password: userPassword
@@ -68,6 +69,16 @@ function LogIn() {
     );
 }
 
+
+async function clearAll (){
+    try {
+        await AsyncStorage.clear();
+    } catch(e) {
+        // clear error
+    }
+    console.log(' cleaning of async storage Done.');
+}
+
 function SignUp(props) {
     const {navigation} = props
     const [userEmail, setUserEmail] = React.useState()
@@ -76,6 +87,7 @@ function SignUp(props) {
     const toggleSwitch = () => (previousState => !previousState)
 
     function sendRegister() {
+        clearAll();
         switch (userRole) {
             case "user":
                 setUserRole("passive");

@@ -53,6 +53,7 @@ function CalendarPage(props) {
             }
         }
     }
+
     /*
     function addDates() {
         for(let d of listDate) {

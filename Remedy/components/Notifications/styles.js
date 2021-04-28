@@ -15,6 +15,7 @@ export const colors = {
   secondary: "#AAACAB",
   tertiary: "#ebebeb",
   alternative: "#36D5F3",
+  red:"#b30202"
 };
 
 const statusBarHeight = Constants.statusBarHeight;
@@ -81,14 +82,19 @@ export const HiddenButton = styled.TouchableOpacity`
   align-items: center;
 `;
 
+export const TodoTitle = styled.Text`
+  font-size: 17px;
+  letter-spacing: 1px;
+  color: ${colors.red};
+`;
 export const TodoText = styled.Text`
-  font-size: 16px;
+  font-size: 25px;
   letter-spacing: 1px;
   color: ${colors.tertiary};
 `;
 
 export const TodoDate = styled.Text`
-  font-size: 10px;
+  font-size: 15px;
   letter-spacing: 1px;
   color: ${colors.alternative};
   text-align: right;
