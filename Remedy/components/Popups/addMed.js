@@ -66,7 +66,6 @@ const AddMed = ({modalVisible, setModalVisible}) => {
         let value;
         try {
             value = await AsyncStorage.getItem('jwt');
-            userId = await AsyncStorage.getItem('uid');
         } catch(e) {
             console.log("couldn't acces to jwt in local storage");
         }
@@ -103,8 +102,7 @@ const AddMed = ({modalVisible, setModalVisible}) => {
         {
             headers: {
               token: localToken
-            }
-        
+        }
         }).then((res)=>{
             Alert.alert('Reminder added!')
         }).catch(function (error) {
