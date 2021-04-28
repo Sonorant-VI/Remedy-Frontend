@@ -51,11 +51,7 @@ function Home(props) {
                     console.log(e);
                 }
             }
-        }).then(()=>{
-            fillTodos();
         });
-
-
         async function setMemory() {
             let values
             let map = new Map();
@@ -69,8 +65,6 @@ function Home(props) {
             })
             return map;
         }
-
-
         //get all MedReminders
         async function getMedReminderList() {
             let listMed;
@@ -97,6 +91,7 @@ function Home(props) {
             return listApp;
         }
     },[]);
+    fillTodos();
 
     const initialTodos = [
         {
@@ -113,8 +108,6 @@ function Home(props) {
             key: "3"
         }]
 
-
-
     function fillTodos(){
         let todo=[]
         if(appReminder) {
@@ -128,17 +121,11 @@ function Home(props) {
                 todo.push(obj);
             };
         }
-        useEffect(()=>{
-            handleAddTodo(todo);
-        },[todo]);
         console.log(todo);
         return todo;
     }
 
-
     // initial notifications
-
-
     const [todos, setTodos] = useState(initialTodos);
     //Modal Visibility & input Value
     const [modalVisible, setModalVisible] = useState(false);
