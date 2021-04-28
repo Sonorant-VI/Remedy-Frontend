@@ -121,7 +121,6 @@ function Home(props) {
                 todo.push(obj);
             };
         }
-        console.log(todo);
         return todo;
     }
 
