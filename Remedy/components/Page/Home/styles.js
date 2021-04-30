@@ -32,6 +32,15 @@ const styles = StyleSheet.create({
       marginTop: 5,
       width: '95%',
     },
+    headlineTitle:{
+        textAlign: 'center',
+        fontWeight: 'bold',
+        fontSize: 18,
+        marginTop: 0
+    },
+    medHeadLine:{
+        marginTop:-5
+    }
   });
 
 export default styles;

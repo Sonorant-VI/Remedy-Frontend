@@ -66,7 +66,7 @@ const ListItems = ({todos, setTodos, handleTriggerEdit}) => {
             disableLeftSwipe={true}
             showsVerticalScrollIndicator={false}
             style={{
-                flex: 1, paddingBottom: 30, marginBottom: 40
+                flex: 1, paddingBottom: 30
             }}
             onRowOpen={(rowKey) => {
                 setSwipedRow(rowKey);

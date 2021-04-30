@@ -27,11 +27,11 @@ const AddMed = ({modalVisible, setModalVisible}) => {
         setShow(true);
         setMode(currentMode);
       };
-    
+
       const showDatepicker = () => {
         showMode('date');
       };
-    
+
       const showTimepicker = () => {
         showMode('time');
       };
@@ -58,7 +58,7 @@ const AddMed = ({modalVisible, setModalVisible}) => {
     //         })
     //     }
 
-        
+
     //     settodoInputValue("");
     // }
 
@@ -66,7 +66,6 @@ const AddMed = ({modalVisible, setModalVisible}) => {
         let value;
         try {
             value = await AsyncStorage.getItem('jwt');
-            userId = await AsyncStorage.getItem('uid');
         } catch(e) {
             console.log("couldn't acces to jwt in local storage");
         }
@@ -89,7 +88,7 @@ const AddMed = ({modalVisible, setModalVisible}) => {
         //console.log(brand);
         //console.log(generic);
         console.log(date);
-        
+
         const localToken = await getJwt();
         const id = await getUserId();
         //console.log(localToken);
@@ -104,7 +103,7 @@ const AddMed = ({modalVisible, setModalVisible}) => {
             headers: {
               token: localToken
             }
-        
+
         }).then((res)=>{
             Alert.alert('Reminder added!')
         }).catch(function (error) {
@@ -114,26 +113,26 @@ const AddMed = ({modalVisible, setModalVisible}) => {
 
 
     return (
-        
-        <> 
-            
-            <TouchableOpacity 
+
+        <>
+            <ScrollView>
+            <TouchableOpacity
               style={styles.whiteButton}
               onPress={() => {setModalVisible(true)}}>
                 <AntDesign name="plus" size={30} color={colors.primary}/>
                 <Text style={styles.whiteBtnText}>Medication</Text>
             </TouchableOpacity>
 
-            
-            <Modal 
+
+            <Modal
                 animationType="slide"
                 transparent={true}
                 visible={modalVisible}
                 onRequestClose={handleCloseModal}
-            >   
+            >
                 <ScrollView style={styles.scrollView}>
                 <ModalContainer>
-                    
+
                     <ModalView>
                         <ModalIcon>
                             <HeaderTitle>Add Medications</HeaderTitle>
@@ -162,7 +161,7 @@ const AddMed = ({modalVisible, setModalVisible}) => {
                             setGenericName(generic);
                          }}/>
 
-                        <Button 
+                        <Button
                         onPress={sendCreateReminder}
                         title="Create Reminder"
                         color="#0c6d3f"
@@ -170,7 +169,7 @@ const AddMed = ({modalVisible, setModalVisible}) => {
                         //onPress={() => Alert.alert('Reminder added!')}
                         />
 
-                    
+
                         {/* <StyledInput
                             placeholder="Add a todo"
                             placeholderTextColor={colors.alternative}
@@ -192,7 +191,7 @@ const AddMed = ({modalVisible, setModalVisible}) => {
                 </ModalContainer>
                 </ScrollView>
             </Modal>
-            
+            </ScrollView>
         </>
 
     );
