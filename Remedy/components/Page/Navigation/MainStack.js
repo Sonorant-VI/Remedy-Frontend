@@ -2,8 +2,10 @@ import * as React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Button } from 'react-native';
+import { Button, Platform} from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
 
 // Pages
  import Home from '../Home/index';
@@ -12,13 +14,26 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
  import CalendarPage from '../Calendar/index';
  import SettingsP from '../SettingsP/index';
  import FAQ from '../FAQ/index';
-
+import MainStackNavigator from "./MainStackNavigator";
 
 // Icons
 // Use https://icons.expo.fyi/ for icons
 import { Ionicons } from '@expo/vector-icons'; 
 import { Fontisto } from '@expo/vector-icons';
 
+
+async function  logOut(){
+    const asyncStorageKeys = await AsyncStorage.getAllKeys();
+    if (asyncStorageKeys.length > 0) {
+        if (Platform.OS === 'android') {
+            await AsyncStorage.clear();
+        }
+        if (Platform.OS === 'ios') {
+            await AsyncStorage.multiRemove(asyncStorageKeys);
+        }
+    }
+    console.log(' cleaning of async storage Done.');
+}
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -34,7 +49,7 @@ function HomeStack() {
           headerTitleStyle: { fontWeight: 'bold' },
           headerRight: () => (
             <Button
-              onPress={() => alert('i was clicked!')}
+              onPress={ () =>logOut()}
               title="Log Out"
               color="#fff"
             />
@@ -44,7 +59,6 @@ function HomeStack() {
         <Stack.Screen
           name="Home"
           component={Home} />
-
       </Stack.Navigator>
     </>
   );

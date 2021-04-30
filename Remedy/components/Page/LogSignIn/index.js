@@ -109,6 +109,7 @@ function SignUp(props) {
             default:
                 setUserRole("passive");
         }
+        console.log(userRole,userEmail,userPassword);
         axios.post('http://sonorant-vi.herokuapp.com/api/auth/register', {
             email: userEmail,
             password: userPassword,
@@ -151,7 +152,9 @@ function SignUp(props) {
                             <RadioButton
                                 value="user"
                                 status={userRole === 'user' ? 'checked' : 'unchecked'}
-                                onPress={() => setUserRole('user')}
+                                onPress={() => {setUserRole('user');
+                                console.log(userRole);
+                                }}
                             />
                             <TouchableOpacity onPress={() => setUserRole('user')}>
                                 <Text style={styles.label}>Active User</Text>
@@ -162,7 +165,9 @@ function SignUp(props) {
                             <RadioButton
                                 value="authUser"
                                 status={userRole === 'authUser' ? 'checked' : 'unchecked'}
-                                onPress={() => setUserRole('authUser')}
+                                onPress={() =>{ setUserRole('authUser');
+                                    console.log(userRole);
+                                }}
                             />
                             <TouchableOpacity onPress={() => setUserRole('authUser')}>
                                 <Text style={styles.label}>Passive User</Text>
