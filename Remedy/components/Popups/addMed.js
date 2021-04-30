@@ -102,8 +102,12 @@ const AddMed = ({modalVisible, setModalVisible}) => {
         {
             headers: {
               token: localToken
+<<<<<<< HEAD
             }
 
+=======
+        }
+>>>>>>> appReminder
         }).then((res)=>{
             Alert.alert('Reminder added!')
         }).catch(function (error) {
