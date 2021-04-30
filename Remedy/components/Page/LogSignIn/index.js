@@ -3,6 +3,10 @@ import {StyleSheet, View, Text, TouchableOpacity, Image, ScrollView, KeyboardAvo
 import {RadioButton} from 'react-native-paper';
 import {TextInput} from 'react-native-gesture-handler';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import { createStackNavigator } from '@react-navigation/stack';
+import { NavigationContainer } from '@react-navigation/native';
+
+
 // import Icon from 'react-native-vector-icons/Ionicons';
 import {Ionicons} from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -10,8 +14,9 @@ import styles from './styles';
 
 import axios from "axios";
 import {useEffect} from "react";
+import { startClock } from 'react-native-reanimated';
 
-function LogIn() {
+function LogIn({navigation}) {
     const [userEmail, setUserEmail] = React.useState()
     const [userPassword, setUserPassword] = React.useState()
 
@@ -38,7 +43,7 @@ function LogIn() {
 
 
     return (
-        <KeyboardAvoidingView style={{flex: 1, flexDirection: 'column', justifyContent: 'center',}} behavior="padding"
+        <KeyboardAvoidingView style={{flex: 1, flexDirection: 'column', justifyContent: 'center', paddingTop: 100}} behavior="padding"
                               enabled keyboardVerticalOffset={100}>
             <ScrollView>
                 <View style={styles.container}>
@@ -59,6 +64,12 @@ function LogIn() {
                             onPress={() => sendLogin()}
                         >
                             <Text style={styles.buttonText}>LogIn</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={styles.buttonContainer}
+                            onPress={() => navigation.navigate('SignUp')}
+                        >
+                            <Text style={styles.buttonText}>Create Account</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
@@ -86,7 +97,7 @@ function SignUp(props) {
     const [userRole, setUserRole] = React.useState('user')
     const toggleSwitch = () => (previousState => !previousState)
 
-    function sendRegister() {
+    function sendRegister({navigation}) {
         clearAll();
         switch (userRole) {
             case "user":
@@ -116,7 +127,7 @@ function SignUp(props) {
     }
 
     return (
-        <KeyboardAvoidingView style={{flex: 1, flexDirection: 'column', justifyContent: 'center',}} behavior="padding"
+        <KeyboardAvoidingView style={{flex: 1, flexDirection: 'column', justifyContent: 'center', paddingTop: 100}} behavior="padding"
                               enabled keyboardVerticalOffset={100}>
             <ScrollView>
                 <View style={styles.container}>
@@ -167,6 +178,13 @@ function SignUp(props) {
                             <Text style={styles.buttonText}>SignUp</Text>
 
                         </TouchableOpacity>
+                        <TouchableOpacity
+                            style={styles.buttonContainer}
+                            onPress={() => navigation.navigate('LogIn')}
+                        >
+                            <Text style={styles.buttonText}>Already have an account?</Text>
+
+                        </TouchableOpacity>
                     </View>
                 </View>
             </ScrollView>
@@ -176,24 +194,21 @@ function SignUp(props) {
 
 
 function LogSignIn() {
-    const Tab = createBottomTabNavigator();
+    const Stack = createStackNavigator();
+
     return (
-        <Tab.Navigator
-            screenOptions={({route}) => ({
-                tabBarIcon: ({focused, color, size}) => {
-                    let iconName;
-                    if (route.name === 'LogIn') {
-                        iconName = focused ? "person" : "person-outline";
-                    } else if (route.name === 'SignUp') {
-                        iconName = focused ? "person-add" : "person-add-outline";
-                    }
-                    return <Ionicons name={iconName} size={18} color={color}/>;
-                },
-            })}
-        >
-            <Tab.Screen name="LogIn" component={LogIn}/>
-            <Tab.Screen name="SignUp" component={SignUp}/>
-        </Tab.Navigator>
+        <Stack.Navigator>
+            <Stack.Screen
+                name="LogIn"
+                component={LogIn}
+                options={{ headerShown: false}}
+            />
+            <Stack.Screen
+                name="SignUp"
+                component={SignUp}
+                options={{ headerShown: false}}
+            />
+          </Stack.Navigator>
     );
 }
 

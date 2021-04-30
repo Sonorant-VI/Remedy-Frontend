@@ -1,7 +1,8 @@
 import * as React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
+import { getStateFromPath, NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+
 
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
@@ -18,33 +19,22 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 // Use https://icons.expo.fyi/ for icons
 import { Ionicons } from '@expo/vector-icons'; 
 import { Fontisto } from '@expo/vector-icons';
+import { StackRouter } from 'react-navigation';
 
 const Tab = createBottomTabNavigator();
+const Stack = createStackNavigator();
 
 function LogInStack() {
 
   return (
     <NavigationContainer>
-      <Tab.Navigator   
-        tabBarOptions={{
-        activeTintColor: '#09B0DD',
-        }} 
-      >
-   <Tab.Screen
+      <Stack.Navigator>
+        <Stack.Screen
         name="LogSignInStack"
         component={LogSignIn}
-        options={{
-          tabBarLabel: 'LogSignInStack',
-          tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons
-              name="account-circle-outline"
-              color={color}
-              size={size}
-            /> 
-          ),
-        }}  
-     />
-      </Tab.Navigator>
+        options={{ headerShown: false}}
+        />
+        </Stack.Navigator>
     </NavigationContainer>
   )
 }

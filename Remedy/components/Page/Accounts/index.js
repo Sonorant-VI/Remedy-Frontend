@@ -9,12 +9,6 @@ function Accounts(props) {
   return (
     <View style={styles.container}>
       <Text style={styles.text}>Accounts</Text>
-      <TouchableOpacity
-        style={styles.buttonContainer}
-        onPress={() => navigation.navigate('LogSignIn')}>
-        <Text style={styles.buttonText}>Open Log in page</Text>
-      </TouchableOpacity>
-
     </View>
   )
 }

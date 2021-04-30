@@ -2,7 +2,7 @@ import * as React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-
+import { Button } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 // Pages
@@ -31,7 +31,14 @@ function HomeStack() {
         screenOptions={{
           headerStyle: { backgroundColor: '#09B0DD' },
           headerTintColor: '#fff',
-          headerTitleStyle: { fontWeight: 'bold' }
+          headerTitleStyle: { fontWeight: 'bold' },
+          headerRight: () => (
+            <Button
+              onPress={() => alert('i was clicked!')}
+              title="Log Out"
+              color="#fff"
+            />
+          ),
         }}
       >
         <Stack.Screen
@@ -79,12 +86,6 @@ function AccountsStack() {
           component={Accounts} 
           options={{ title: 'Account Page' }}
            />
-        <Stack.Screen
-          name="LogSignIn"
-          component={LogSignIn}
-          options={{ title: 'LogSignIn Page' }} 
-          />
-
       </Stack.Navigator>
     </>
   );
@@ -94,7 +95,8 @@ function MainStack() {
 
   return (
     <NavigationContainer>
-      <Tab.Navigator   
+      <Tab.Navigator  
+        initialRouteName="HomeStack" 
         tabBarOptions={{
         activeTintColor: '#09B0DD',
         }} 
