@@ -127,6 +127,26 @@ function Home(props) {
 
         return todo;
     }
+    function fillTodosMed(){
+        let todo=[]
+        if(medReminder) {
+            let i= 1;
+            for (let userObject of medReminder) {
+                i++;
+                let obj=new Object();
+                let date=new Date(userObject.time);
+                date.setSeconds(date.getSeconds()+userObject.timeout);
+                date=Moment(date).format("dd/mm/yyyy hh:MM:ss");
+                obj.title=(userObject.brandName.toString())+" "+(userObject.genericName.toString());
+                obj.text=userObject.reminderMsg.toString();
+                obj.key=i.toString();
+                obj.date=date.toString();
+                todo.push(obj);
+            };
+        }
+
+        return todo;
+    }
 
     function fillPushNotif(obj){
         let expoPushToken=registerForPushNotificationsAsync;
@@ -173,14 +193,20 @@ function Home(props) {
         setTodoToBeEdited(null);
         setModalVisible(false);
     }
-
     return (
         <>
             <View style={styles.container}>
                 <View style={[{flex: 1}, styles.elementsContainer]}>
                     <View style={{flex: 3}}>
+                        <Text style={styles.headlineTitle}>Appointments</Text>
                         <ListItems
                             todos={fillTodos()}
+                            setTodos={setTodos}
+                            handleTriggerEdit={handleTriggerEdit}
+                        />
+                        <Text style={[styles.headlineTitle,styles.medHeadLine]}>Medications</Text>
+                        <ListItems
+                            todos={fillTodosMed()}
                             setTodos={setTodos}
                             handleTriggerEdit={handleTriggerEdit}
                         />
