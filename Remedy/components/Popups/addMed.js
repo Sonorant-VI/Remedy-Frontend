@@ -13,6 +13,8 @@ const AddMed = ({modalVisible, setModalVisible}) => {
     const [date, setDate] = useState(new Date())
     const [brand, setBrandName] = React.useState()
     const [generic, setGenericName] = React.useState()
+    const [message, setMessage] = React.useState()
+
     // const [date, setDate] = useState(new Date(1598051730000));
     const [mode, setMode] = useState('dateTime')
     const [show, setShow] = useState(false)
@@ -97,17 +99,14 @@ const AddMed = ({modalVisible, setModalVisible}) => {
             time:date,
             brandName:brand,
             genericName:generic,
+            reminderMsg: message,
             patientId:id
         },
         {
             headers: {
               token: localToken
-<<<<<<< HEAD
             }
 
-=======
-        }
->>>>>>> appReminder
         }).then((res)=>{
             Alert.alert('Reminder added!')
         }).catch(function (error) {
@@ -163,6 +162,10 @@ const AddMed = ({modalVisible, setModalVisible}) => {
                         <Text style={styles.textInputHeader}>Generic Name</Text>
                         <TextInput style={styles.textInput} placeholder="Enter generic name..." onChangeText={(generic) => {
                             setGenericName(generic);
+                         }}/>
+                         <Text style={styles.textInputHeader}>Reminder Message</Text>
+                        <TextInput style={styles.textInput} placeholder="Enter reminder message..." onChangeText={(message) => {
+                            setMessage(message);
                          }}/>
 
                         <Button
