@@ -32,6 +32,7 @@ async function  logOut(){
             await AsyncStorage.multiRemove(asyncStorageKeys);
         }
     }
+    MainStackNavigator();
     console.log(' cleaning of async storage Done.');
 }
 
