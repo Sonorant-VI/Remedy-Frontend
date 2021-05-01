@@ -144,6 +144,7 @@ function Home(props) {
                 todo.push(obj);
             };
         }
+        if (todo)
 
         return todo;
     }

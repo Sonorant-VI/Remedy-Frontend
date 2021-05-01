@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import {Modal, Text, Button, Alert, ScrollView} from 'react-native';
+import {Modal, Text, Button, Alert, ScrollView,KeyboardAvoidingView} from 'react-native';
 
 import {ModalButton, ModalContainer, ModalView, StyledInput, ModalAction, ModalActionGroup, ModalIcon, HeaderTitle, colors, styles} from "../Popups/styles";
 import {AntDesign} from '@expo/vector-icons'
@@ -107,6 +107,7 @@ const AddMed = ({modalVisible, setModalVisible}) => {
               token: localToken
             }
 
+
         }).then((res)=>{
             Alert.alert('Reminder added!')
         }).catch(function (error) {
@@ -155,6 +156,8 @@ const AddMed = ({modalVisible, setModalVisible}) => {
                             onChange={onChange}
                             />
                         )}
+                        <KeyboardAvoidingView  behavior={Platform.OS === "ios" ? "padding" : "height"}
+                                               style={styles.container}>
                         <Text style={styles.textInputHeader}>Brand Name</Text>
                         <TextInput style={styles.textInput} placeholder="Enter brand name..." onChangeText={(brand) => {
                             setBrandName(brand);
@@ -175,6 +178,7 @@ const AddMed = ({modalVisible, setModalVisible}) => {
                         accessibilityLabel="Learn more about this purple button"
                         //onPress={() => Alert.alert('Reminder added!')}
                         />
+                        </KeyboardAvoidingView>
 
 
                         {/* <StyledInput
