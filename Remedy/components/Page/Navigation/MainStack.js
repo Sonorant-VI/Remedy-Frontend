@@ -101,27 +101,6 @@ function CalendarStack() {
   );
 };
 
-function AccountsStack() {
-  return (
-    <>
-      <Stack.Navigator
-        initialRouteName="Accounts"
-        screenOptions={{
-          headerStyle: { backgroundColor: '#09B0DD' },
-          headerTintColor: '#fff',
-          headerTitleStyle: { fontWeight: 'bold' }
-        }}
-      >
-        <Stack.Screen
-          name="Accounts"
-          component={Accounts} 
-          options={{ title: 'Account Page' }}
-           />
-      </Stack.Navigator>
-    </>
-  );
-};
-
 function MainStack() {
 
   return (
@@ -132,20 +111,6 @@ function MainStack() {
         activeTintColor: '#09B0DD',
         }} 
       >
-   <Tab.Screen
-        name="AccountsStack"
-        component={AccountsStack}
-        options={{
-          tabBarLabel: 'Accounts',
-          tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons
-              name="account-circle-outline"
-              color={color}
-              size={size}
-            /> 
-          ),
-        }}  
-        />
       
       <Tab.Screen
         name="HomeStack"
