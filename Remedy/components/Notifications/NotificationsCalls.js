@@ -61,25 +61,18 @@ export default function App() {
 }
 
 // Can use this function below, OR use Expo's Push Notification Tool-> https://expo.io/notifications
-async function sendPushNotification(expoPushToken) {
-    const message = {
-        to: expoPushToken,
-        sound: 'default',
-        title: 'Original Title',
-        body: 'And here is the body!',
-        data: { someData: 'goes here' },
-    };
 
-    await fetch('https://exp.host/--/api/v2/push/send', {
-        method: 'POST',
-        headers: {
-            Accept: 'application/json',
-            'Accept-encoding': 'gzip, deflate',
-            'Content-Type': 'application/json',
+async function schedulePushNotification() {
+    await Notifications.scheduleNotificationAsync({
+        content: {
+            title: "You've got mail! 📬",
+            body: 'Here is the notification body',
+            data: { data: 'goes here' },
         },
-        body: JSON.stringify(message),
+        trigger: { seconds: 2 },
     });
 }
+
 
 async function registerForPushNotificationsAsync() {
     let token;
