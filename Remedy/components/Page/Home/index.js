@@ -19,6 +19,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import Moment from 'moment';
 import axios from "axios";
 
+import RNRestart from 'react-native-restart';
+
 
 function Home(props) {
     const {navigation} = props

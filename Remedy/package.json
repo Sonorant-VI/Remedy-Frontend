@@ -11,6 +11,7 @@
     "eject": "expo eject"
   },
   "dependencies": {
+    "@babel/runtime": "^7.14.0",
     "@expo/ngrok": "^2.4.3",
     "@react-native-async-storage/async-storage": "^1.15.4",
     "@react-native-community/masked-view": "0.1.10",
@@ -25,6 +26,7 @@
     "expo-notifications": "^0.11.5",
     "expo-permissions": "^10.0.0",
     "expo-status-bar": "~1.0.3",
+    "fiction-expo-restart": "^1.0.9",
     "moment": "^2.29.1",
     "native-base": "^2.15.2",
     "react": "16.13.1",
@@ -39,6 +41,7 @@
     "react-native-navigation-actions": "^1.0.4",
     "react-native-paper": "^4.7.2",
     "react-native-reanimated": "~1.13.0",
+    "react-native-restart": "0.0.22",
     "react-native-safe-area-context": "3.1.9",
     "react-native-screens": "~2.15.2",
     "react-native-swipe-list-view": "^3.2.7",
@@ -54,7 +57,8 @@
     "styled-components": "^5.2.3"
   },
   "devDependencies": {
-    "@babel/core": "^7.9.0"
+    "@babel/core": "^7.9.0",
+    "@types/react-native-restart": "0.0.0"
   },
   "eslintConfig": {
     "extends": "react-app"

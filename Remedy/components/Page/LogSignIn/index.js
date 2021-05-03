@@ -16,6 +16,8 @@ import axios from "axios";
 import {useEffect} from "react";
 import { startClock } from 'react-native-reanimated';
 
+import {Restart} from 'fiction-expo-restart';
+
 function LogIn({navigation}) {
     const [userEmail, setUserEmail] = React.useState()
     const [userPassword, setUserPassword] = React.useState()
@@ -32,6 +34,7 @@ function LogIn({navigation}) {
             const uid = ["uid", JSON.stringify(res.data.id)]
             try {
                 await AsyncStorage.multiSet([token, uid]);
+                Restart();
             } catch (e) {
                 console.log(e);
             }

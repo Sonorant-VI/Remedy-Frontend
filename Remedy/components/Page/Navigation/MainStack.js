@@ -1,11 +1,12 @@
 import * as React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, CommonActions} from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Button, Platform} from 'react-native';
+import { Button, Platform, NativeModules} from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
+import {Restart} from 'fiction-expo-restart';
 
 // Pages
  import Home from '../Home/index';
@@ -14,7 +15,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
  import CalendarPage from '../Calendar/index';
  import SettingsP from '../SettingsP/index';
  import FAQ from '../FAQ/index';
-import MainStackNavigator from "./MainStackNavigator";
+// import MainStackNavigator from "./MainStackNavigator";
+// import LogInStack from '../Navigation/LogInStack';
 
 // Icons
 // Use https://icons.expo.fyi/ for icons
@@ -31,10 +33,24 @@ async function  logOut(){
         if (Platform.OS === 'ios') {
             await AsyncStorage.multiRemove(asyncStorageKeys);
         }
+        Restart();
     }
-    MainStackNavigator();
+   // MainStackNavigator();
     console.log(' cleaning of async storage Done.');
-}
+    //RNRestart.Restart();
+   // NativeDevSettings.reload();
+    // navigation.dispatch(
+    //   CommonActions.reset({
+    //     index: 1,
+    //     routes: [
+    //       {
+    //         name: 'Calendar'
+    //       },
+    //       { name: 'Accounts'}
+    //     ]
+    //   })
+    // )
+  }
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
