@@ -57,7 +57,7 @@ export const ListContainer = styled.View`
 `;
 
 export const ListView = styled.TouchableHighlight`
-  background-color: ${colors.secondary};
+  background-color: ${colors.tertiary};
   min-height: 85px;
   width: 100%;
   padding: 15px;
@@ -67,7 +67,7 @@ export const ListView = styled.TouchableHighlight`
 `;
 
 export const ListViewHidden = styled.View`
-  background-color: ${colors.tertiary};
+  background-color: ${colors.secondary};
   min-height: 85px;
   width: 100%;
   padding: 15px;
@@ -90,7 +90,7 @@ export const TodoTitle = styled.Text`
 export const TodoText = styled.Text`
   font-size: 25px;
   letter-spacing: 1px;
-  color: ${colors.tertiary};
+  color: ${colors.primary};
 `;
 
 export const TodoDate = styled.Text`

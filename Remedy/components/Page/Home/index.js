@@ -21,6 +21,8 @@ import axios from "axios";
 
 import RNRestart from 'react-native-restart';
 
+import { FontAwesome5 } from '@expo/vector-icons';
+
 
 function Home(props) {
     const {navigation} = props
@@ -201,13 +203,21 @@ function Home(props) {
             <View style={styles.container}>
                 <View style={[{flex: 1}, styles.elementsContainer]}>
                     <View style={{flex: 3}}>
-                        <Text style={styles.headlineTitle}>Appointments</Text>
+                        <View style={styles.headlineBox}>
+                            <FontAwesome5 name="clinic-medical" size={34} color="black" /> 
+                            <Text style={styles.headlineTitle}> Appointments</Text>
+                        </View>
+                        <View style={styles.divider} />
                         <ListItems
                             todos={fillTodos()}
                             setTodos={setTodos}
                             handleTriggerEdit={handleTriggerEdit}
                         />
-                        <Text style={[styles.headlineTitle,styles.medHeadLine]}>Medications</Text>
+                        <View style={styles.headlineBox}>
+                            <FontAwesome5 name="pills" size={34} color="black" />
+                            <Text style={[styles.headlineTitle,styles.medHeadLine]}> Medications</Text>
+                        </View>
+                        <View style={styles.divider} />
                         <ListItems
                             todos={fillTodosMed()}
                             setTodos={setTodos}

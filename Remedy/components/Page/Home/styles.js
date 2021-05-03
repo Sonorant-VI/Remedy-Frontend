@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native';
 const styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: '#ebebeb',
+      backgroundColor: 'white',
       justifyContent: 'center',
       alignItems: 'center',
       width: '100%',
@@ -33,13 +33,24 @@ const styles = StyleSheet.create({
       width: '95%',
     },
     headlineTitle:{
-        textAlign: 'center',
-        fontWeight: 'bold',
-        fontSize: 18,
-        marginTop: 0
+      textAlign: 'center',
+      fontWeight: 'bold',
+      fontSize: 30,
+      marginTop: 0,
+      marginBottom: 10,
     },
     medHeadLine:{
-        marginTop:-5
+      marginTop:-5
+    },
+    headlineBox: {
+      marginTop: 10,
+      flexDirection: 'row',
+      justifyContent: 'center',
+    },
+    divider: {
+      marginBottom: 5,
+      borderBottomWidth: 1,
+      borderColor: 'black'
     }
   });
 
