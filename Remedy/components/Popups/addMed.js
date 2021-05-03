@@ -95,14 +95,18 @@ const AddMed = ({modalVisible, setModalVisible}) => {
             Notifications.removeNotificationSubscription(responseListener.current);
         };
     }, []);
-    async function schedulePushNotification() {
+    // TODO: add parameters for H, M, title, body
+    async function schedulePushNotification(x) {
         Notifications.scheduleNotificationAsync({
             content: {
                 title: "You've got mail! 📬",
                 body: 'new Notification ;) ',
                 data: {data: 'goes here'},
             },
-            trigger: {  seconds: 1},
+            trigger: {
+                hours: currentHour + difference,
+                minutes: currentMinutes + difference,
+                repeats: true },
         });
     }
 
@@ -164,7 +168,8 @@ const AddMed = ({modalVisible, setModalVisible}) => {
         const id = await getUserId();
         console.log(registerForPushNotificationsAsync());
         console.log(id);
-        schedulePushNotification();
+        // TODO: probably move it to ".then" & add parameters
+        schedulePushNotification(1);
 
         axios.post('http://sonorant-vi.herokuapp.com/api/medReminder/',{
             time:date,
@@ -179,8 +184,8 @@ const AddMed = ({modalVisible, setModalVisible}) => {
             }
         }).then((res)=>{
             let startDate= res.data.time;
-            let endDate=res.data.timeout;
-            let hours=
+            // TODO: calculate H & M dif and move "schedule..." function here
+            // res.data.time - current time =
             Alert.alert('Reminder added!')
         }).catch(function (error) {
             console.log(error.response.request._response);
