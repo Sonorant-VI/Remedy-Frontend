@@ -58,7 +58,7 @@ function LogIn({navigation}) {
                             }}/>
                         </View>
                         <View style={styles.accountInfoBox}>
-                            <TextInput style={styles.accountInfo} placeholder="password" onChangeText={(password) => {
+                            <TextInput style={styles.accountInfo} placeholder="password" secureTextEntry={true} onChangeText={(password) => {
                                 setUserPassword(password);
                             }}/>
                         </View>
@@ -143,12 +143,12 @@ function SignUp(props) {
                             }}/>
                         </View>
                         <View style={styles.accountInfoBox}>
-                            <TextInput style={styles.accountInfo} placeholder="password" onChangeText={(password) => {
+                            <TextInput style={styles.accountInfo} placeholder="password" secureTextEntry={true} onChangeText={(password) => {
                                 setUserPassword(password);
                             }}/>
                         </View>
                         <View style={styles.accountInfoBox}>
-                            <TextInput style={styles.accountInfo} placeholder="check password"/>
+                            <TextInput style={styles.accountInfo} placeholder="check password" secureTextEntry={true}/>
                         </View>
                         <Text style={styles.role}>role</Text>
                         <View style={styles.radioButtonContainer}>
