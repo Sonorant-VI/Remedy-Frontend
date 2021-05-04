@@ -66,7 +66,7 @@ function LogIn({navigation}) {
                             style={styles.buttonContainer}
                             onPress={() => sendLogin()}
                         >
-                            <Text style={styles.buttonText}>LogIn</Text>
+                            <Text style={styles.buttonText}>Login</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
                             style={styles.buttonContainer}
