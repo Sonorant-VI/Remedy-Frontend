@@ -120,7 +120,7 @@ function Home(props) {
                 i++;
                 let obj=new Object();
                 let date=new Date(userObject.start);
-                date=Moment(date).format("dd/mm/yyyy hh:MM:ss");
+                date=Moment(date).format("ddd, DD MMMM, h:mm a");
                 obj.title=userObject.purpose.toString();
                 obj.text=userObject.reminder_msg.toString();
                 obj.key=i.toString();
@@ -140,7 +140,7 @@ function Home(props) {
                 let obj=new Object();
                 let date=new Date(userObject.time);
                 date.setSeconds(date.getSeconds()+userObject.timeout);
-                date=Moment(date).format("dd/mm/yyyy hh:MM:ss");
+                date=Moment(date).format("ddd, DD MMMM, h:mm a");
                 obj.title=(userObject.brandName.toString())+" "+(userObject.genericName.toString());
                 obj.text=userObject.reminderMsg.toString();
                 obj.key=i.toString();
