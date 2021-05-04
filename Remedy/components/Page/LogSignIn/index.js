@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {StyleSheet, View, Text, TouchableOpacity, Image, ScrollView, KeyboardAvoidingView, Alert} from 'react-native';
+import {StyleSheet, View, Text, TouchableOpacity, Image, ScrollView, KeyboardAvoidingView} from 'react-native';
 import {RadioButton} from 'react-native-paper';
 import {TextInput} from 'react-native-gesture-handler';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
@@ -21,7 +21,6 @@ import {Restart} from 'fiction-expo-restart';
 function LogIn({navigation}) {
     const [userEmail, setUserEmail] = React.useState()
     const [userPassword, setUserPassword] = React.useState()
-    const [errorLog, setError] = React.useState()
 
     let logoPath = require('../../../assets/logo-circle.png');
 
@@ -39,13 +38,11 @@ function LogIn({navigation}) {
             } catch (e) {
                 console.log(e);
             }
-        }).catch(error=>{
-           setError(JSON.parse(error.request.response).message);
+        }).catch(function (error) {
+            console.log(error.message);
         });
+
     }
-    let formatText = (text) => {
-        return text.replace(/[^+\d]/g, '');
-    };
 
 
     return (
@@ -55,7 +52,6 @@ function LogIn({navigation}) {
                 <View style={styles.container}>
                     <View style={styles.logInBox}>
                         <Image style={styles.logo} source={logoPath}/>
-                        <Text style={styles.error}> {errorLog}</Text>
                         <View style={styles.accountInfoBox}>
                             <TextInput style={styles.accountInfo} placeholder="email" onChangeText={(email) => {
                                 setUserEmail(email);
@@ -102,7 +98,6 @@ function SignUp(props) {
     const [userEmail, setUserEmail] = React.useState()
     const [userPassword, setUserPassword] = React.useState()
     const [userRole, setUserRole] = React.useState('user')
-    const [errorSign, setErrorSign] = React.useState()
     const toggleSwitch = () => (previousState => !previousState)
 
     function sendRegister({navigation}) {
@@ -131,7 +126,7 @@ function SignUp(props) {
                 console.log(e);
             }
         }).catch(function (error) {
-            setErrorSign(JSON.parse(error.request.response).message);
+            console.log(error);
         });
     }
 
@@ -142,7 +137,6 @@ function SignUp(props) {
                 <View style={styles.container}>
                     <Text style={styles.text}>Sign Up</Text>
                     <View style={styles.signUpBox}>
-                        <Text style={styles.error}> {errorSign}</Text>
                         <View style={styles.accountInfoBox}>
                             <TextInput style={styles.accountInfo} placeholder="email" onChangeText={(email) => {
                                 setUserEmail(email);
