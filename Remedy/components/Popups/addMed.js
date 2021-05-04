@@ -134,6 +134,7 @@ const AddMed = ({modalVisible, setModalVisible}) => {
                 visible={modalVisible}
                 onRequestClose={handleCloseModal}
             >
+                <KeyboardAvoidingView style={{flex: 1, flexDirection: 'column', justifyContent: 'center', paddingTop: 80, backgroundColor: '#ebebeb'}} behavior="padding" enabled keyboardVerticalOffset={0}>
                 <ScrollView style={styles.scrollView}>
                 <ModalContainer>
 
@@ -201,6 +202,8 @@ const AddMed = ({modalVisible, setModalVisible}) => {
                     </ModalView>
                 </ModalContainer>
                 </ScrollView>
+                </KeyboardAvoidingView>
+
             </Modal>
             </ScrollView>
         </>

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import {Modal, Text, Button, Alert, ScrollView} from 'react-native';
+import {Modal, Text, Button, Alert, ScrollView, KeyboardAvoidingView} from 'react-native';
 
 import {ModalButton, ModalContainer, ModalView, StyledInput, ModalAction, ModalActionGroup, ModalIcon, HeaderTitle, colors, styles} from "../Popups/styles";
 import {AntDesign} from '@expo/vector-icons'
@@ -129,6 +129,7 @@ const AddApp = ({modalVisible, setModalVisible}) => {
                 visible={modalVisible}
                 onRequestClose={handleCloseModal}
             >
+                <KeyboardAvoidingView style={{flex: 1, flexDirection: 'column', justifyContent: 'center', paddingTop: 80, backgroundColor: '#ebebeb'}} behavior="padding" enabled keyboardVerticalOffset={0}>
                 <ScrollView style={styles.scrollView}>
                 <ModalContainer>
                     <ModalView>
@@ -180,6 +181,7 @@ const AddApp = ({modalVisible, setModalVisible}) => {
                 </ModalView>
                 </ModalContainer>
                 </ScrollView>
+                </KeyboardAvoidingView>
             </Modal>
         </>
 
