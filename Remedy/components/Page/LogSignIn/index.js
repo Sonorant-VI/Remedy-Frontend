@@ -47,8 +47,7 @@ function LogIn({navigation}) {
 
 
     return (
-        <KeyboardAvoidingView style={{flex: 1, flexDirection: 'column', justifyContent: 'center', paddingTop: 100}} behavior="padding"
-                              enabled keyboardVerticalOffset={100}>
+        <KeyboardAvoidingView style={{flex: 1, flexDirection: 'column', justifyContent: 'center', paddingTop: 80, backgroundColor: '#ebebeb'}} behavior="padding" enabled keyboardVerticalOffset={0}>
             <ScrollView>
                 <View style={styles.container}>
                     <View style={styles.logInBox}>
@@ -134,8 +133,7 @@ function SignUp(props) {
     }
 
     return (
-        <KeyboardAvoidingView style={{flex: 1, flexDirection: 'column', justifyContent: 'center', paddingTop: 100}} behavior="padding"
-                              enabled keyboardVerticalOffset={100}>
+        <KeyboardAvoidingView style={{flex: 1, flexDirection: 'column', justifyContent: 'center', paddingTop: 80, backgroundColor: '#ebebeb'}} behavior="padding" enabled keyboardVerticalOffset={0}>
             <ScrollView>
                 <View style={styles.container}>
                     <Text style={styles.text}>Sign Up</Text>
