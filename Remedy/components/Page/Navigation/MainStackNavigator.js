@@ -12,7 +12,7 @@ export default class MainStackNavigator extends Component
     this.state= {isTrue: false}
   }
 
-  componentWillMount = async() =>
+  UNSAFE_componentWillMount = async() =>
   {
     let newJwt;
     console.log("componenetwillmount")

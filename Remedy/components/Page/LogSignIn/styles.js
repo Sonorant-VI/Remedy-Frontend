@@ -33,6 +33,10 @@ const styles = StyleSheet.create({
       marginVertical: 30,
       justifyContent: "center",
     },
+    error: {
+        color:'#cc0000',
+        fontSize:18
+    },
     role: {
       color: '#101010',
       fontSize: 24,

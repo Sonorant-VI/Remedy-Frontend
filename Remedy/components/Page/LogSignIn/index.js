@@ -21,6 +21,7 @@ import {Restart} from 'fiction-expo-restart';
 function LogIn({navigation}) {
     const [userEmail, setUserEmail] = React.useState()
     const [userPassword, setUserPassword] = React.useState()
+    const [errorSign, setErrorSign] = React.useState()
 
     let logoPath = require('../../../assets/logo-circle.png');
 
@@ -39,7 +40,7 @@ function LogIn({navigation}) {
                 console.log(e);
             }
         }).catch(function (error) {
-            console.log(error.message);
+            setErrorSign(JSON.parse(error.request.response).message);
         });
 
     }
@@ -52,6 +53,7 @@ function LogIn({navigation}) {
                 <View style={styles.container}>
                     <View style={styles.logInBox}>
                         <Image style={styles.logo} source={logoPath}/>
+                        <Text style={styles.error}>{errorSign}</Text>
                         <View style={styles.accountInfoBox}>
                             <TextInput style={styles.accountInfo} placeholder="email" onChangeText={(email) => {
                                 setUserEmail(email);
@@ -98,6 +100,7 @@ function SignUp(props) {
     const [userEmail, setUserEmail] = React.useState()
     const [userPassword, setUserPassword] = React.useState()
     const [userRole, setUserRole] = React.useState('user')
+    const [errorLog, setErrorLog] = React.useState()
     const toggleSwitch = () => (previousState => !previousState)
 
     function sendRegister({navigation}) {
@@ -126,7 +129,7 @@ function SignUp(props) {
                 console.log(e);
             }
         }).catch(function (error) {
-            console.log(error);
+            setErrorLog(JSON.parse(error.request.response).message);
         });
     }
 
@@ -136,6 +139,7 @@ function SignUp(props) {
             <ScrollView>
                 <View style={styles.container}>
                     <Text style={styles.text}>Sign Up</Text>
+                    <Text style={styles.error}>{errorLog}</Text>
                     <View style={styles.signUpBox}>
                         <View style={styles.accountInfoBox}>
                             <TextInput style={styles.accountInfo} placeholder="email" onChangeText={(email) => {
