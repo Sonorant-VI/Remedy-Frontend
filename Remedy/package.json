@@ -38,6 +38,7 @@
     "react-native-floating-action": "^1.21.0",
     "react-native-gesture-handler": "~1.8.0",
     "react-native-keyboard-aware-scroll-view": "^0.9.3",
+    "react-native-material-textfield": "^0.16.1",
     "react-native-navigation-actions": "^1.0.4",
     "react-native-paper": "^4.7.2",
     "react-native-reanimated": "~1.13.0",
