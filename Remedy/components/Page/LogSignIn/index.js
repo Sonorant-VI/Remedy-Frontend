@@ -44,6 +44,8 @@ function LogIn({navigation}) {
         });
 
     }
+    
+    
 
 
     return (
@@ -94,15 +96,15 @@ async function clearAll (){
     console.log(' cleaning of async storage Done.');
 }
 
-function SignUp(props) {
-    const {navigation} = props
+function SignUp({navigation}) {
+//    const {navigation} = props
     const [userEmail, setUserEmail] = React.useState()
     const [userPassword, setUserPassword] = React.useState()
     const [userRole, setUserRole] = React.useState('user')
     const [errorLog, setErrorLog] = React.useState()
     const toggleSwitch = () => (previousState => !previousState)
 
-    function sendRegister({navigation}) {
+    function sendRegister() {
         clearAll();
         switch (userRole) {
             case "user":
@@ -127,9 +129,26 @@ function SignUp(props) {
             } catch (e) {
                 console.log(e);
             }
+            registerButtonAction1(); // redirect 
         }).catch(function (error) {
             setErrorLog(JSON.parse(error.request.response).message);
         });
+    }
+
+    const registerButtonAction1 = () =>
+    {
+        navigation.navigate('LogIn');
+    } 
+
+    const registerButtonAction2 = () => 
+    {
+        sendRegister();
+    }
+
+    const registerButton = () =>
+    {
+        registerButtonAction2(); // register
+        // registerButtonAction1(); // redirect 
     }
 
     return (
@@ -183,7 +202,7 @@ function SignUp(props) {
                         {/* <Text style={styles.desc}>add descriptions..</Text> */}
                         <TouchableOpacity
                             style={styles.buttonContainer}
-                            onPress={() => sendRegister()}
+                            onPress={() => registerButton()}
                         >
                             <Text style={styles.buttonText}>SignUp</Text>
 
