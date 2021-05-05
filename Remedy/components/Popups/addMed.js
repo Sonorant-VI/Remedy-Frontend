@@ -17,6 +17,9 @@ const AddMed = ({modalVisible, setModalVisible}) => {
     const [generic, setGenericName] = React.useState()
     const [message, setMessage] = React.useState()
 
+    var currentH = new Date().getHours();
+    var currentM = new Date().getMinutes();
+
     // const [date, setDate] = useState(new Date(1598051730000));
     const [mode, setMode] = useState('dateTime')
     const [show, setShow] = useState(false)
@@ -65,6 +68,9 @@ const AddMed = ({modalVisible, setModalVisible}) => {
 
     //     settodoInputValue("");
     // }
+
+        
+
     Notifications.setNotificationHandler({
         handleNotification: async () => ({
             shouldShowAlert: true,
@@ -96,17 +102,15 @@ const AddMed = ({modalVisible, setModalVisible}) => {
         };
     }, []);
     // TODO: add parameters for H, M, title, body
-    async function schedulePushNotification(x) {
+    async function schedulePushNotification(countdownM, message, brandMsg) {
+        console.log(countdownM);
         Notifications.scheduleNotificationAsync({
             content: {
-                title: "You've got mail! 📬",
-                body: 'new Notification ;) ',
+                title: "Take medication now! 📬" + brandMsg,
+                body: message,
                 data: {data: 'goes here'},
             },
-            trigger: {
-                hours: currentHour + difference,
-                minutes: currentMinutes + difference,
-                repeats: true },
+            trigger: { seconds: countdownM, repeats: true },
         });
     }
 
@@ -165,11 +169,12 @@ const AddMed = ({modalVisible, setModalVisible}) => {
         //console.log(brand);
         //console.log(generic);
         const localToken = await getJwt();
-        const id = await getUserId();
+        var id = await getUserId();
+        id = parseInt(id);
         console.log(registerForPushNotificationsAsync());
         console.log(id);
         // TODO: probably move it to ".then" & add parameters
-        schedulePushNotification(1);
+        //schedulePushNotification(1);
 
         axios.post('http://sonorant-vi.herokuapp.com/api/medReminder/',{
             time:date,
@@ -184,8 +189,28 @@ const AddMed = ({modalVisible, setModalVisible}) => {
             }
         }).then((res)=>{
             let startDate= res.data.time;
+            let message = res.data.reminderMsg;
+            let brandMsg = res.data.brandName;
             // TODO: calculate H & M dif and move "schedule..." function here
-            // res.data.time - current time =
+            //res.data.time - current time =
+            let reminderH = startDate.split('T')[1].split(':')[0];
+            let reminderM = startDate.split('T')[1].split(':')[1];
+
+            //console.log(currentH);
+            //console.log(currentM);
+            
+            var difH = reminderH - currentH;
+            var difM = reminderM - currentM;
+            
+            let countdownH = ((difH > 0) ? difH : reminderH + 24 - currentH);
+            let countdownM = ((difM > 0) ? difM : reminderM + 60 - currentM);
+
+            console.log(countdownH);
+            console.log(countdownM);
+
+            countdownM = countdownM * 60;
+            schedulePushNotification(countdownM, message, brandMsg);
+
             Alert.alert('Reminder added!')
         }).catch(function (error) {
             console.log(error.response.request._response);
